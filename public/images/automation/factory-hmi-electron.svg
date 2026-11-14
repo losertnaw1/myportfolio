@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" fill="none">
+  <rect width="800" height="450" rx="16" fill="#070B12"/>
+  <!-- Window Chrome -->
+  <rect x="40" y="35" width="720" height="380" rx="12" fill="#0F172A" stroke="#334155" stroke-width="2"/>
+  <rect x="40" y="35" width="720" height="38" rx="12" fill="#1E293B"/>
+  <circle cx="65" cy="54" r="6" fill="#EF4444"/>
+  <circle cx="85" cy="54" r="6" fill="#F59E0B"/>
+  <circle cx="105" cy="54" r="6" fill="#10B981"/>
+  <text x="310" y="59" fill="#94A3B8" font-family="monospace" font-size="12">Industrial Control HMI — Electron + React + .NET</text>
+
+  <!-- Left Status Panel -->
+  <rect x="65" y="95" width="210" height="295" rx="8" fill="#090D16" stroke="#1E293b"/>
+  <text x="85" y="125" fill="#34D399" font-family="monospace" font-size="12" font-weight="bold">● PLC CONNECTED</text>
+  <text x="85" y="155" fill="#E2E8F0" font-family="monospace" font-size="11">IP: 192.168.1.10:502</text>
+  <text x="85" y="180" fill="#E2E8F0" font-family="monospace" font-size="11">Cycle Time: 8.4 ms</text>
+  <text x="85" y="205" fill="#E2E8F0" font-family="monospace" font-size="11">Camera FPS: 60.0</text>
+  <rect x="85" y="235" width="170" height="36" rx="6" fill="#064E3B"/>
+  <text x="108" y="258" fill="#6EE7B7" font-family="monospace" font-size="12" font-weight="bold">START PRODUCTION</text>
+  <rect x="85" y="285" width="170" height="36" rx="6" fill="#1E293B"/>
+  <text x="115" y="308" fill="#94A3B8" font-family="monospace" font-size="12">DIAGNOSTIC LOGS</text>
+
+  <!-- Right Live Telemetry Grid -->
+  <rect x="295" y="95" width="440" height="135" rx="8" fill="#090D16" stroke="#1E293B"/>
+  <text x="315" y="125" fill="#38BDF8" font-family="monospace" font-size="12" font-weight="bold">LIVE CHUTE &amp; CONVEYOR TELEMETRY</text>
+  <rect x="315" y="145" width="90" height="60" rx="6" fill="#064E3B"/>
+  <text x="330" y="175" fill="#6EE7B7" font-family="monospace" font-size="11">CHUTE 01</text>
+  <text x="330" y="192" fill="#F8FAFC" font-family="monospace" font-size="10">OK • 342</text>
+  <rect x="420" y="145" width="90" height="60" rx="6" fill="#064E3B"/>
+  <text x="435" y="175" fill="#6EE7B7" font-family="monospace" font-size="11">CHUTE 02</text>
+  <text x="435" y="192" fill="#F8FAFC" font-family="monospace" font-size="10">OK • 298</text>
+  <rect x="525" y="145" width="90" height="60" rx="6" fill="#451A03"/>
+  <text x="540" y="175" fill="#FBBF24" font-family="monospace" font-size="11">CHUTE 03</text>
+  <text x="540" y="192" fill="#F8FAFC" font-family="monospace" font-size="10">FULL • 410</text>
+  <rect x="630" y="145" width="90" height="60" rx="6" fill="#064E3B"/>
+  <text x="645" y="175" fill="#6EE7B7" font-family="monospace" font-size="11">CHUTE 04</text>
+  <text x="645" y="192" fill="#F8FAFC" font-family="monospace" font-size="10">OK • 189</text>
+
+  <rect x="295" y="250" width="440" height="140" rx="8" fill="#090D16" stroke="#1E293B"/>
+  <text x="315" y="280" fill="#94A3B8" font-family="monospace" font-size="12">REAL-TIME EVENT STREAM</text>
+  <text x="315" y="310" fill="#34D399" font-family="monospace" font-size="11">[16:04:11.082] PLC_SYNC_ACK — Line speed 1.8m/s</text>
+  <text x="315" y="335" fill="#38BDF8" font-family="monospace" font-size="11">[16:04:11.210] CAM_01_DECODE — Barcode #89231 -&gt; Chute 02</text>
+  <text x="315" y="360" fill="#FBBF24" font-family="monospace" font-size="11">[16:04:11.540] ALARM_WARN — Chute 03 photo-eye blocked</text>
+</svg>
+

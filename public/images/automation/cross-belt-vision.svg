@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" fill="none">
+  <rect width="800" height="450" rx="16" fill="#070B12"/>
+  <g opacity="0.2" stroke="#1E293B" stroke-width="1">
+    <path d="M0 75H800M0 150H800M0 225H800M0 300H800M0 375H800"/>
+    <path d="M100 0V450M200 0V450M300 0V450M400 0V450M500 0V450M600 0V450M700 0V450"/>
+  </g>
+  <!-- Industrial Camera Node -->
+  <rect x="50" y="70" width="200" height="130" rx="12" fill="#0F172A" stroke="#10B981" stroke-width="2"/>
+  <circle cx="95" cy="120" r="22" fill="#064E3B" stroke="#34D399" stroke-width="2"/>
+  <circle cx="95" cy="120" r="9" fill="#34D399"/>
+  <text x="130" y="115" fill="#F8FAFC" font-family="monospace" font-size="14" font-weight="bold">IND. CAMERA</text>
+  <text x="130" y="135" fill="#94A3B8" font-family="monospace" font-size="11">High-Speed Trigger</text>
+  <text x="70" y="175" fill="#34D399" font-family="monospace" font-size="11">● Barcode / Parcel Vision</text>
+
+  <!-- PLC Controller Node -->
+  <rect x="50" y="250" width="200" height="130" rx="12" fill="#0F172A" stroke="#F59E0B" stroke-width="2"/>
+  <rect x="70" y="275" width="40" height="45" rx="6" fill="#451A03" stroke="#FBBF24" stroke-width="1.5"/>
+  <text x="122" y="295" fill="#F8FAFC" font-family="monospace" font-size="14" font-weight="bold">PLC CONTROLLER</text>
+  <text x="122" y="315" fill="#94A3B8" font-family="monospace" font-size="11">Encoder &amp; Sensor I/O</text>
+  <text x="70" y="355" fill="#FBBF24" font-family="monospace" font-size="11">● S7 / Modbus / TCP</text>
+
+  <!-- Central .NET Vision & Control Engine -->
+  <rect x="310" y="135" width="210" height="180" rx="14" fill="#0F172A" stroke="#38BDF8" stroke-width="2.5"/>
+  <text x="335" y="175" fill="#38BDF8" font-family="monospace" font-size="13" font-weight="bold">CORE ENGINE (.NET 6+)</text>
+  <text x="335" y="205" fill="#F8FAFC" font-family="monospace" font-size="12">• Post-Image Processing</text>
+  <text x="335" y="230" fill="#F8FAFC" font-family="monospace" font-size="12">• Chute Routing Logic</text>
+  <text x="335" y="255" fill="#F8FAFC" font-family="monospace" font-size="12">• PLC Sync &amp; Telemetry</text>
+  <rect x="335" y="275" width="160" height="24" rx="6" fill="#0C4A6E"/>
+  <text x="350" y="291" fill="#7DD3FC" font-family="monospace" font-size="11">Latency &lt; 15ms Real-time</text>
+
+  <!-- Cross-Belt Sorter & Electron HMI -->
+  <rect x="580" y="135" width="175" height="180" rx="12" fill="#0F172A" stroke="#10B981" stroke-width="2"/>
+  <text x="600" y="175" fill="#34D399" font-family="monospace" font-size="13" font-weight="bold">CROSS-BELT LINE</text>
+  <text x="600" y="205" fill="#E2E8F0" font-family="monospace" font-size="11">• Auto Chute Discharge</text>
+  <text x="600" y="230" fill="#E2E8F0" font-family="monospace" font-size="11">• Electron / React HMI</text>
+  <text x="600" y="255" fill="#E2E8F0" font-family="monospace" font-size="11">• Live Sort Analytics</text>
+  <rect x="600" y="275" width="135" height="24" rx="6" fill="#064E3B"/>
+  <text x="615" y="291" fill="#6EE7B7" font-family="monospace" font-size="11">99.9% Sort Accuracy</text>
+
+  <!-- Connecting Lines -->
+  <path d="M250 135L310 195" stroke="#10B981" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <path d="M250 315L310 255" stroke="#F59E0B" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <path d="M520 225H580" stroke="#38BDF8" stroke-width="2.5"/>
+</svg>
+

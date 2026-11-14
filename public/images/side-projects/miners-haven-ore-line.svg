@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" fill="none">
+  <rect width="1200" height="675" fill="#070B12"/>
+  <g opacity="0.18" stroke="#1E293B" stroke-width="1">
+    <path d="M0 90H1200M0 180H1200M0 270H1200M0 360H1200M0 450H1200M0 540H1200"/>
+    <path d="M120 0V675M240 0V675M360 0V675M480 0V675M600 0V675M720 0V675M840 0V675M960 0V675M1080 0V675"/>
+  </g>
+  <rect x="48" y="48" width="1104" height="579" rx="24" stroke="#334155" stroke-width="2" stroke-dasharray="12 10"/>
+  <rect x="88" y="84" width="200" height="38" rx="19" fill="#451A03" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="188" y="109" text-anchor="middle" fill="#FCD34D" font-family="monospace" font-size="15" font-weight="bold" letter-spacing="2">PLACEHOLDER</text>
+
+  <!-- Production line illustration -->
+  <rect x="200" y="430" width="800" height="26" rx="13" fill="#0F172A" stroke="#334155" stroke-width="2"/>
+  <g fill="#F59E0B">
+    <circle cx="280" cy="443" r="6"/><circle cx="380" cy="443" r="6"/><circle cx="480" cy="443" r="6"/>
+    <circle cx="580" cy="443" r="6"/><circle cx="680" cy="443" r="6"/><circle cx="780" cy="443" r="6"/><circle cx="880" cy="443" r="6"/>
+  </g>
+  <rect x="230" y="320" width="120" height="110" rx="12" fill="#0F172A" stroke="#34D399" stroke-width="2.5"/>
+  <text x="290" y="365" text-anchor="middle" fill="#6EE7B7" font-family="monospace" font-size="14" font-weight="bold">DROPPER</text>
+  <text x="290" y="388" text-anchor="middle" fill="#64748B" font-family="monospace" font-size="11">spawns ore</text>
+  <rect x="420" y="330" width="130" height="100" rx="12" fill="#0F172A" stroke="#38BDF8" stroke-width="2.5"/>
+  <text x="485" y="372" text-anchor="middle" fill="#7DD3FC" font-family="monospace" font-size="14" font-weight="bold">UPGRADER</text>
+  <text x="485" y="396" text-anchor="middle" fill="#64748B" font-family="monospace" font-size="11">× value</text>
+  <rect x="620" y="330" width="130" height="100" rx="12" fill="#0F172A" stroke="#F59E0B" stroke-width="2.5"/>
+  <text x="685" y="372" text-anchor="middle" fill="#FCD34D" font-family="monospace" font-size="14" font-weight="bold">FURNACE</text>
+  <text x="685" y="396" text-anchor="middle" fill="#64748B" font-family="monospace" font-size="11">smelts ore</text>
+  <rect x="820" y="330" width="130" height="100" rx="12" fill="#0F172A" stroke="#A78BFA" stroke-width="2.5"/>
+  <text x="885" y="372" text-anchor="middle" fill="#C4B5FD" font-family="monospace" font-size="14" font-weight="bold">SELL</text>
+  <text x="885" y="396" text-anchor="middle" fill="#64748B" font-family="monospace" font-size="11">cash out</text>
+  <path d="M350 380H420M550 380H620M750 380H820" stroke="#475569" stroke-width="3" stroke-dasharray="8 6"/>
+  <g fill="#34D399">
+    <circle cx="390" cy="415" r="8"/><circle cx="585" cy="415" r="8"/><circle cx="785" cy="415" r="8"/>
+  </g>
+
+  <text x="600" y="540" text-anchor="middle" fill="#F8FAFC" font-family="monospace" font-size="26" font-weight="bold">MINER'S HAVEN — ORE PRODUCTION LINE</text>
+  <text x="600" y="575" text-anchor="middle" fill="#94A3B8" font-family="monospace" font-size="15">Replace this file with your in-game screenshot (public/images/side-projects/)</text>
+</svg>

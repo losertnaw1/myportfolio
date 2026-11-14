@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" fill="none">
+  <rect width="1200" height="675" fill="#070B12"/>
+  <g opacity="0.18" stroke="#1E293B" stroke-width="1">
+    <path d="M0 90H1200M0 180H1200M0 270H1200M0 360H1200M0 450H1200M0 540H1200"/>
+    <path d="M120 0V675M240 0V675M360 0V675M480 0V675M600 0V675M720 0V675M840 0V675M960 0V675M1080 0V675"/>
+  </g>
+  <rect x="48" y="48" width="1104" height="579" rx="24" stroke="#334155" stroke-width="2" stroke-dasharray="12 10"/>
+  <rect x="88" y="84" width="200" height="38" rx="19" fill="#0C4A6E" stroke="#38BDF8" stroke-width="1.5"/>
+  <text x="188" y="109" text-anchor="middle" fill="#7DD3FC" font-family="monospace" font-size="15" font-weight="bold" letter-spacing="2">PLACEHOLDER</text>
+
+  <!-- Progression / upgrade panel illustration -->
+  <rect x="330" y="170" width="540" height="300" rx="20" fill="#0F172A" stroke="#334155" stroke-width="2"/>
+  <text x="370" y="215" fill="#F8FAFC" font-family="monospace" font-size="18" font-weight="bold">UPGRADE BASE</text>
+  <rect x="370" y="240" width="460" height="1" fill="#1E293B"/>
+  <g>
+    <rect x="370" y="265" width="220" height="70" rx="12" fill="#0B1220" stroke="#334155"/>
+    <rect x="390" y="288" width="34" height="24" rx="4" fill="#34D399" opacity="0.9"/>
+    <text x="440" y="298" fill="#E2E8F0" font-family="monospace" font-size="13">Dropper MK. II</text>
+    <text x="440" y="318" fill="#64748B" font-family="monospace" font-size="11">+40% ore rate</text>
+    <rect x="610" y="265" width="220" height="70" rx="12" fill="#0B1220" stroke="#334155"/>
+    <rect x="630" y="288" width="34" height="24" rx="4" fill="#38BDF8" opacity="0.9"/>
+    <text x="680" y="298" fill="#E2E8F0" font-family="monospace" font-size="13">Upgrader II</text>
+    <text x="680" y="318" fill="#64748B" font-family="monospace" font-size="11">×2.5 value</text>
+    <rect x="370" y="350" width="220" height="70" rx="12" fill="#0B1220" stroke="#334155"/>
+    <rect x="390" y="373" width="34" height="24" rx="4" fill="#FBBF24" opacity="0.9"/>
+    <text x="440" y="383" fill="#E2E8F0" font-family="monospace" font-size="13">Furnace III</text>
+    <text x="440" y="403" fill="#64748B" font-family="monospace" font-size="11">×3.0 value</text>
+    <rect x="610" y="350" width="220" height="70" rx="12" fill="#0B1220" stroke="#334155"/>
+    <rect x="630" y="373" width="34" height="24" rx="4" fill="#A78BFA" opacity="0.9"/>
+    <text x="680" y="383" fill="#E2E8F0" font-family="monospace" font-size="13">New Ore Tier</text>
+    <text x="680" y="403" fill="#64748B" font-family="monospace" font-size="11">locked</text>
+  </g>
+  <rect x="370" y="435" width="460" height="28" rx="6" fill="#1E293B"/>
+  <rect x="370" y="435" width="310" height="28" rx="6" fill="#0EA5E9" opacity="0.75"/>
+
+  <text x="600" y="540" text-anchor="middle" fill="#F8FAFC" font-family="monospace" font-size="26" font-weight="bold">MINER'S HAVEN — UPGRADES &amp; PROGRESSION</text>
+  <text x="600" y="575" text-anchor="middle" fill="#94A3B8" font-family="monospace" font-size="15">Replace this file with your in-game screenshot (public/images/side-projects/)</text>
+</svg>
