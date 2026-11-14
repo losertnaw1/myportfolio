@@ -55,7 +55,6 @@ export interface SideProjectImage {
   alt: LocalizedText;
   caption: LocalizedText;
   device: "desktop" | "mobile";
-  isPlaceholder?: boolean;
 }
 
 export interface SideProjectMetric {
@@ -81,7 +80,6 @@ export interface SideProject {
   techStack: string[];
   liveUrl?: string;
   liveLabel?: LocalizedText;
-  imageNote?: LocalizedText;
   images: SideProjectImage[];
 }
 
@@ -712,7 +710,7 @@ export const portfolioData = {
    * DỰ ÁN CÁ NHÂN / SIDE PROJECTS (TRANG /side-projects)
    * Mỗi object render thành 1 block: gallery ảnh + overview + tech stack.
    * Ảnh Lucinox là ảnh chụp thật từ lucinox.vercel.app (public/images/side-projects).
-   * Ảnh Miner's Haven là placeholder — chỉ cần thay file .svg bằng ảnh in-game thật.
+   * Ảnh Miner's Haven là ảnh chụp in-game thật (màn hình vào game, Shop/Inventory, dây chuyền kiếm tiền).
    * ============================================================================
    */
   sideProjects: [
@@ -892,8 +890,8 @@ export const portfolioData = {
         en: "Miner's Haven — Roblox Game",
       },
       menuSummary: {
-        vi: "Game tycoon khai thác mỏ: xây căn cứ, nâng cấp quặng và mở rộng dây chuyền.",
-        en: "A mining tycoon game: build your base, upgrade ore, and expand the production line.",
+        vi: "Game tycoon khai thác mỏ: mua dropper, xếp dây chuyền quặng và kiếm tiền.",
+        en: "A mining tycoon game: buy droppers, lay out ore lines, and earn cash.",
       },
       status: {
         vi: "Dự án cá nhân",
@@ -912,35 +910,41 @@ export const portfolioData = {
         en: "Miner's Haven — Roblox Mining Tycoon",
       },
       summary: {
-        vi: "Miner's Haven là game tycoon khai thác mỏ trên Roblox: người chơi bắt đầu với một căn cứ nhỏ, đặt dropper sinh quặng, dẫn quặng qua conveyor tới upgrader và lò nung để nhân giá trị, rồi bán lấy tiền mở rộng dây chuyền và mở khoá những loại quặng quý hơn.",
-        en: "Miner's Haven is a mining tycoon game on Roblox: start with a small base, place droppers that spawn ore, route ore through conveyors, upgraders, and furnaces to multiply its value, then sell it to expand your setup and unlock rarer ores.",
+        vi: "Miner's Haven là game tycoon khai thác mỏ trên Roblox: từ màn hình vào game, người chơi mở Shop mua dropper và lò nung, đặt thiết bị từ Inventory, rồi để dropper tự nhả quặng lên conveyor — quặng chạy qua dây chuyền và bán lấy tiền để mở rộng căn cứ.",
+        en: "Miner's Haven is a mining tycoon game on Roblox: from the entry screen you open the Shop to buy droppers and furnaces, place them from your Inventory, and let droppers drop ore onto conveyors — ore runs down the line and sells for cash to grow the base.",
       },
       overview: {
         vi: [
-          "Vòng lặp chính: dropper sinh quặng → conveyor vận chuyển → upgrader và lò nung nhân giá trị → bán lấy tiền để nâng cấp căn cứ.",
-          "Xây dựng căn cứ trên đảo riêng: đặt, xoay và nâng cấp từng thiết bị để tối ưu dây chuyền sản xuất.",
-          "Càng về sau càng mở khoá thêm quặng hiếm và thiết bị đắt tiền, dây chuyền dài hơn và giá trị mỗi viên quặng cao hơn.",
-          "Chơi trực tiếp trên Roblox với PC, mobile và console — không cần cài đặt, có thể vào chơi cùng bạn bè.",
+          "Màn hình vào game: logo Miner's Haven đặt giữa nền đảo mờ, hai nút Enter và Play Solo để vào căn cứ một mình hoặc cùng bạn bè, kèm dòng tip hướng dẫn (ví dụ upgrader có giới hạn sử dụng và sẽ nháy khi đặt sai).",
+          "HUD trên cùng hiển thị số dư tiền và thu nhập mỗi giây — trong ảnh là $77.1M và 11.3M/s, cộng thanh tiến trình RP và số ore đang có.",
+          "Inventory là lưới vật phẩm đã sở hữu, có ô tìm kiếm và sắp xếp theo Oldest / Newest / Tier để lọc nhanh thiết bị.",
+          "Shop chia 5 nhóm Droppers, Furnaces, Machines, Decor và Premium; danh sách Recommended hiển thị từng món kèm giá, từ $25M tới gần $2B ở các bậc cao.",
+          "Kiếm tiền: dropper nhả quặng lên conveyor, quặng chạy dọc dây chuyền (có hiệu ứng phát sáng) rồi được bán — tiền và thu nhập mỗi giây cập nhật liên tục trên HUD.",
+          "Chơi trực tiếp trên Roblox với PC, mobile và console — không cần cài đặt.",
         ],
         en: [
-          "Core loop: droppers spawn ore → conveyors move it → upgraders and furnaces multiply its value → sell for cash to upgrade the base.",
-          "Base building on a private island: place, rotate, and upgrade each machine to optimize the production line.",
-          "Long-term progression unlocks rarer ores and more expensive machines, resulting in longer lines and higher ore value.",
-          "Playable directly on Roblox across PC, mobile, and console — no install required, easy to hop in with friends.",
+          "Entry screen: the Miner's Haven logo sits over a blurred island backdrop with Enter and Play Solo buttons for joining the base alone or with friends, plus a rotating gameplay tip (e.g. upgraders have usage limits and flash when placed wrong).",
+          "The top HUD shows your cash balance and income per second — $77.1M and 11.3M/s in the shot — alongside an RP progress bar and ore count.",
+          "Inventory is a grid of owned items with a search box and Oldest / Newest / Tier sorting to find machines quickly.",
+          "The Shop is split into Droppers, Furnaces, Machines, Decor, and Premium tabs, with a Recommended list that prices each item from $25M up to nearly $2B at the top tiers.",
+          "Earning money: droppers drop ore onto conveyors, ore travels down the line with glowing effects and is sold — cash and income per second update live on the HUD.",
+          "Playable directly on Roblox across PC, mobile, and console — no install required.",
         ],
       },
       highlights: {
         vi: [
-          "Dropper tự động sinh quặng, conveyor vận chuyển liên tục tới các trạm xử lý.",
-          "Upgrader và lò nung cộng dồn hệ số nhân giá trị quặng.",
-          "Hệ thống tiền tệ, nâng cấp thiết bị và mở rộng căn cứ theo từng cấp.",
-          "Tiến trình mở khoá quặng và thiết bị mới theo thời gian chơi.",
+          "Màn hình Enter / Play Solo với tip hướng dẫn ngay khi vào game.",
+          "HUD tiền tệ + thu nhập mỗi giây, thanh RP và số ore hiện có.",
+          "Inventory có tìm kiếm và sắp xếp theo Oldest / Newest / Tier.",
+          "Shop 5 nhóm Droppers, Furnaces, Machines, Decor, Premium với giá tăng dần theo bậc.",
+          "Dây chuyền dropper → conveyor → bán quặng, tiền và thu nhập cập nhật realtime.",
         ],
         en: [
-          "Droppers automatically spawn ore while conveyors feed it through processing stations.",
-          "Upgraders and furnaces stack multipliers onto each ore's value.",
-          "Currency, machine upgrades, and base expansion across multiple tiers.",
-          "Progressive unlocks of new ores and machines as you play.",
+          "Enter / Play Solo entry screen with an in-game tip right from the start.",
+          "Cash and income-per-second HUD with an RP bar and ore count.",
+          "Inventory with search and Oldest / Newest / Tier sorting.",
+          "Five shop tabs — Droppers, Furnaces, Machines, Decor, Premium — with tiered pricing.",
+          "Dropper → conveyor → sell loop, with cash and income updating in real time.",
         ],
       },
       metrics: [
@@ -958,48 +962,41 @@ export const portfolioData = {
         },
       ],
       techStack: ["Roblox Studio", "Luau", "Game Design", "Tycoon / Idle Economy"],
-      imageNote: {
-        vi: "Ảnh bên dưới là placeholder mình đang tạm dùng — sẽ thay bằng ảnh chụp in-game thật sau.",
-        en: "The images below are placeholders for now — they will be replaced with real in-game screenshots.",
-      },
       images: [
         {
-          src: "/images/side-projects/miners-haven-base.svg",
+          src: "/images/side-projects/miners-haven-entry.jpg",
           device: "desktop",
-          isPlaceholder: true,
           alt: {
-            vi: "Ảnh placeholder căn cứ khai thác trong Miner's Haven",
-            en: "Placeholder image of a Miner's Haven mining base",
+            vi: "Màn hình bắt đầu Miner's Haven với logo game và hai nút Enter / Play Solo",
+            en: "Miner's Haven entry screen with the game logo and Enter / Play Solo buttons",
           },
           caption: {
-            vi: "Placeholder — toàn cảnh căn cứ và dây chuyền quặng trên đảo",
-            en: "Placeholder — overview of the island base and ore production line",
+            vi: "Màn hình vào game: logo Miner's Haven, nút Enter / Play Solo và dòng tip về giới hạn sử dụng của upgrader",
+            en: "Entry screen: Miner's Haven logo, Enter / Play Solo buttons, and a tip about upgrader usage limits",
           },
         },
         {
-          src: "/images/side-projects/miners-haven-ore-line.svg",
+          src: "/images/side-projects/miners-haven-shop-inventory.jpg",
           device: "desktop",
-          isPlaceholder: true,
           alt: {
-            vi: "Ảnh placeholder dây chuyền conveyor và upgrader trong Miner's Haven",
-            en: "Placeholder image of Miner's Haven conveyors and upgraders",
+            vi: "Giao diện Shop và Inventory trong Miner's Haven, phía trên là số dư tiền và thu nhập mỗi giây",
+            en: "Miner's Haven Shop and Inventory UI with the cash and income HUD on top",
           },
           caption: {
-            vi: "Placeholder — dropper, conveyor, upgrader và lò nung xếp thành một dây chuyền",
-            en: "Placeholder — droppers, conveyors, upgraders, and furnaces arranged in a line",
+            vi: "HUD $77.1M và 11.3M/s; Inventory có tìm kiếm, sắp xếp Oldest/Newest/Tier; Shop chia Droppers, Furnaces, Machines, Decor, Premium với giá từ $25M",
+            en: "$77.1M and 11.3M/s HUD; Inventory with search and Oldest/Newest/Tier sorting; Shop tabs for Droppers, Furnaces, Machines, Decor, and Premium starting at $25M",
           },
         },
         {
-          src: "/images/side-projects/miners-haven-progression.svg",
+          src: "/images/side-projects/miners-haven-earning.jpg",
           device: "desktop",
-          isPlaceholder: true,
           alt: {
-            vi: "Ảnh placeholder màn hình nâng cấp và tiến trình trong Miner's Haven",
-            en: "Placeholder image of Miner's Haven upgrades and progression UI",
+            vi: "Dropper nhả quặng lên conveyor để kiếm tiền trong Miner's Haven",
+            en: "A dropper dropping ore onto a conveyor in Miner's Haven",
           },
           caption: {
-            vi: "Placeholder — màn hình nâng cấp thiết bị và tiến trình mở khoá quặng mới",
-            en: "Placeholder — machine upgrade shop and new-ore unlock progression",
+            vi: "Kiếm tiền: dropper nhả quặng lên conveyor, quặng chạy qua dây chuyền và được bán — số dư cùng thu nhập mỗi giây tăng trên HUD",
+            en: "Earning money: a dropper feeds ore onto the conveyor and it sells down the line while the cash and income-per-second HUD ticks up",
           },
         },
       ],

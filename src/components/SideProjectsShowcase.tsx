@@ -8,7 +8,6 @@ import {
   CheckCircle2,
   Gamepad2,
   Globe2,
-  Info,
   Layers,
   Monitor,
   Smartphone,
@@ -127,13 +126,6 @@ export function SideProjectsShowcase() {
           <div className="grid gap-8 lg:grid-cols-12">
             {/* Left: Screenshot Gallery */}
             <div className="lg:col-span-7">
-              {project.imageNote && (
-                <div className="mb-4 flex items-start gap-2.5 rounded-xl border border-dashed border-amber-500/40 bg-amber-500/5 p-3 text-xs leading-relaxed text-amber-200/90">
-                  <Info className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
-                  <span>{t(project.imageNote)}</span>
-                </div>
-              )}
-
               <div className="group relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-950">
                 <ProjectGalleryImage
                   image={currentImage}
@@ -142,11 +134,6 @@ export function SideProjectsShowcase() {
 
                 <div className="pointer-events-none absolute top-3 left-3 flex flex-wrap gap-2">
                   <DeviceBadge device={currentImage.device} />
-                  {currentImage.isPlaceholder && (
-                    <span className="inline-flex items-center rounded-md border border-amber-500/50 bg-amber-500/15 px-2 py-1 font-mono text-[10px] font-semibold tracking-wide text-amber-200 uppercase backdrop-blur-md">
-                      Placeholder
-                    </span>
-                  )}
                 </div>
 
                 <button
@@ -197,11 +184,6 @@ export function SideProjectsShowcase() {
                       alt=""
                       className="aspect-video w-full object-cover"
                     />
-                    {img.isPlaceholder && (
-                      <span className="absolute top-1 right-1 rounded bg-amber-500/90 px-1 font-mono text-[8px] font-bold text-slate-950 uppercase">
-                        PH
-                      </span>
-                    )}
                   </button>
                 ))}
               </div>

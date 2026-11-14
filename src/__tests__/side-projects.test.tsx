@@ -26,7 +26,11 @@ describe("Side Projects Page (/side-projects)", () => {
     expect(liveLink).toHaveAttribute("href", "https://lucinox.vercel.app");
 
     const minersHaven = portfolioData.sideProjects[1];
-    expect(screen.getByText(minersHaven.imageNote!.vi)).toBeInTheDocument();
+    expect(screen.getByText(minersHaven.overview.vi[0])).toBeInTheDocument();
+    expect(screen.getByAltText(minersHaven.images[0].alt.vi)).toHaveAttribute(
+      "src",
+      minersHaven.images[0].src
+    );
   });
 
   it("switches gallery screenshots and opens the Lightbox modal", () => {
