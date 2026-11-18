@@ -49,22 +49,25 @@ describe("Portfolio Data & Bilingual Context", () => {
     }
   });
 
-  it("switches language between VI and EN via LanguageContext", () => {
+  it("defaults to EN and switches language between EN and VI via LanguageContext", () => {
+    window.localStorage?.clear?.();
     render(
       <LanguageProvider>
         <LanguageConsumer />
       </LanguageProvider>
     );
 
-    expect(screen.getByTestId("current-lang")).toHaveTextContent("vi");
+    expect(screen.getByTestId("current-lang")).toHaveTextContent("en");
+    expect(document.documentElement.lang).toBe("en");
     expect(screen.getByTestId("role-title").textContent).toBe(
-      portfolioData.profile.role.vi
+      portfolioData.profile.role.en
     );
 
     fireEvent.click(screen.getByText("Toggle"));
-    expect(screen.getByTestId("current-lang")).toHaveTextContent("en");
+    expect(screen.getByTestId("current-lang")).toHaveTextContent("vi");
+    expect(document.documentElement.lang).toBe("vi");
     expect(screen.getByTestId("role-title").textContent).toBe(
-      portfolioData.profile.role.en
+      portfolioData.profile.role.vi
     );
   });
 });

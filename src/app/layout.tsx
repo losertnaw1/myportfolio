@@ -6,9 +6,9 @@ import { Footer } from "@/components/Footer";
 import { BackToTop } from "@/components/ui/BackToTop";
 
 export const metadata: Metadata = {
-  title: "Lê Quốc Đạt | Fullstack & Industrial Automation Software Engineer",
+  title: "Le Quoc Dat | Fullstack & Industrial Automation Software Engineer",
   description:
-    "Portfolio của Lê Quốc Đạt — Software Engineer chuyên về Fullstack Web/Desktop (React, Next.js, Vue, .NET, Node.js, Electron) và Tự động hóa Công nghiệp (PLC/MES, Camera Vision, Cross-Belt Sorting).",
+    "Portfolio of Le Quoc Dat — Software Engineer specializing in Fullstack Web/Desktop (React, Next.js, Vue, .NET, Node.js, Electron) and Industrial Automation (PLC/MES, Machine Vision, Cross-Belt Sorting).",
 };
 
 export default function RootLayout({
@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="vi" className="dark">
+    <html lang="en" className="dark">
       <body className="antialiased selection:bg-emerald-500/30 selection:text-emerald-200">
         <LanguageProvider>
           <div className="flex min-h-screen flex-col">

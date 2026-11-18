@@ -14,7 +14,7 @@ describe("Dedicated Automation Showcase Page (/automation)", () => {
     );
 
     for (const project of portfolioData.automationProjects) {
-      expect(screen.getByText(project.title.vi)).toBeInTheDocument();
+      expect(screen.getByText(project.title.en)).toBeInTheDocument();
     }
   });
 
@@ -32,7 +32,7 @@ describe("Dedicated Automation Showcase Page (/automation)", () => {
       (p) => p.category === "vision"
     );
     expect(visionProjects.length).toBeGreaterThan(0);
-    expect(screen.getByText(visionProjects[0].title.vi)).toBeInTheDocument();
+    expect(screen.getByText(visionProjects[0].title.en)).toBeInTheDocument();
   });
 
   it("opens and closes the image Lightbox modal when clicking a project preview image", () => {

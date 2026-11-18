@@ -4,12 +4,11 @@ import { AutomationShowcase } from "@/components/AutomationShowcase";
 
 export const metadata: Metadata = {
   title:
-    "Dự án Tự động hóa (PLC / MES / Vision) | Lê Quốc Đạt — Software Engineer",
+    "Industrial Automation Projects (PLC / MES / Vision) | Le Quoc Dat",
   description:
-    "Chi tiết các dự án Tự động hóa công nghiệp, kết nối PLC/MES, tích hợp Camera công nghiệp và hệ thống phân loại Cross-Belt Sorting của Lê Quốc Đạt.",
+    "End-to-end industrial automation software projects by Le Quoc Dat: real-time PLC/MES telemetry, industrial camera post-processing, and cross-belt sorting control systems.",
 };
 
 export default function AutomationPage() {
   return <AutomationShowcase />;
 }
-

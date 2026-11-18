@@ -15,21 +15,21 @@ describe("Side Projects Page (/side-projects)", () => {
     );
 
     for (const project of portfolioData.sideProjects) {
-      expect(screen.getByText(project.title.vi)).toBeInTheDocument();
+      expect(screen.getByText(project.title.en)).toBeInTheDocument();
     }
 
     const lucinox = portfolioData.sideProjects[0];
-    expect(screen.getByText(lucinox.overview.vi[0])).toBeInTheDocument();
-    expect(screen.getByText(lucinox.highlights.vi[0])).toBeInTheDocument();
+    expect(screen.getByText(lucinox.overview.en[0])).toBeInTheDocument();
+    expect(screen.getByText(lucinox.highlights.en[0])).toBeInTheDocument();
 
     const liveLink = screen.getByRole("link", {
-      name: /mở website trực tiếp/i,
+      name: /open live website|mở website trực tiếp/i,
     });
     expect(liveLink).toHaveAttribute("href", "https://lucinox.vercel.app");
 
     const minersHaven = portfolioData.sideProjects[1];
-    expect(screen.getByText(minersHaven.overview.vi[0])).toBeInTheDocument();
-    expect(screen.getByAltText(minersHaven.images[0].alt.vi)).toHaveAttribute(
+    expect(screen.getByText(minersHaven.overview.en[0])).toBeInTheDocument();
+    expect(screen.getByAltText(minersHaven.images[0].alt.en)).toHaveAttribute(
       "src",
       minersHaven.images[0].src
     );
@@ -42,14 +42,14 @@ describe("Side Projects Page (/side-projects)", () => {
       </LanguageProvider>
     );
 
-    const thumbnails = screen.getAllByLabelText(/xem ảnh \d+/i);
+    const thumbnails = screen.getAllByLabelText(/view image \d+|xem ảnh \d+/i);
     expect(thumbnails.length).toBe(
       portfolioData.sideProjects.reduce((total, p) => total + p.images.length, 0)
     );
 
     fireEvent.click(thumbnails[1]);
     expect(
-      screen.getByText(portfolioData.sideProjects[0].images[1].caption.vi)
+      screen.getByText(portfolioData.sideProjects[0].images[1].caption.en)
     ).toBeInTheDocument();
 
     fireEvent.click(screen.getAllByTestId("open-lightbox-btn")[0]);
@@ -75,7 +75,7 @@ describe("Side Projects Page (/side-projects)", () => {
     expect(menuButton).toHaveAttribute("aria-expanded", "true");
 
     const projectLink = screen.getByRole("link", {
-      name: new RegExp(portfolioData.sideProjects[1].menuTitle.vi, "i"),
+      name: new RegExp(portfolioData.sideProjects[1].menuTitle.en, "i"),
     });
     expect(projectLink).toHaveAttribute("href", "/side-projects#miners-haven");
   });

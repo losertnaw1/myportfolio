@@ -19,7 +19,7 @@ const STORAGE_KEY = "quocdat-portfolio-lang";
 
 export function LanguageProvider({
   children,
-  defaultLang = "vi",
+  defaultLang = "en",
 }: {
   children: React.ReactNode;
   defaultLang?: Language;
@@ -36,6 +36,12 @@ export function LanguageProvider({
       // Ignore storage errors in restricted environments
     }
   }, []);
+
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.documentElement.lang = lang;
+    }
+  }, [lang]);
 
   const setLang = (next: Language) => {
     setLangState(next);
@@ -67,4 +73,3 @@ export function useLanguage(): LanguageContextValue {
   }
   return ctx;
 }
-

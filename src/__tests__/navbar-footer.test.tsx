@@ -24,8 +24,9 @@ describe("Navbar & Footer Components", () => {
     const langToggle = screen.getByRole("button", {
       name: /switch language|chuyển ngôn ngữ|en|vi/i,
     });
+    expect(langToggle).toHaveTextContent("EN ✓ | VI");
     fireEvent.click(langToggle);
-    expect(langToggle).toHaveTextContent(/EN/i);
+    expect(langToggle).toHaveTextContent("VI ✓ | EN");
   });
 
   it("renders Footer with contact details for Le Quoc Dat and GitHub link", () => {
@@ -168,7 +169,9 @@ describe("Navbar & Footer Components", () => {
       );
     });
 
-    const projectsLink = screen.getByRole("link", { name: /kinh nghiệm & dự án/i });
+    const projectsLink = screen.getByRole("link", {
+      name: /kinh nghiệm & dự án|projects/i,
+    });
     expect(projectsLink).toHaveAttribute("data-active", "true");
 
     React.act(() => {
@@ -179,7 +182,7 @@ describe("Navbar & Footer Components", () => {
     });
 
     expect(projectsLink).not.toHaveAttribute("data-active", "true");
-    const eduLink = screen.getByRole("link", { name: /học vấn/i });
+    const eduLink = screen.getByRole("link", { name: /học vấn|education/i });
     expect(eduLink).not.toHaveAttribute("data-active", "true");
 
     vi.unstubAllGlobals();

@@ -185,8 +185,8 @@ describe("Main Portfolio Page Sections", () => {
     );
 
     for (const sp of portfolioData.sideProjects) {
-      expect(screen.getByText(sp.title.vi)).toBeInTheDocument();
-      expect(screen.getByAltText(sp.images[0].alt.vi)).toHaveAttribute(
+      expect(screen.getByText(sp.title.en)).toBeInTheDocument();
+      expect(screen.getByAltText(sp.images[0].alt.en)).toHaveAttribute(
         "src",
         sp.images[0].src
       );

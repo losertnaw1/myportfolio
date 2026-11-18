@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import { SideProjectsShowcase } from "@/components/SideProjectsShowcase";
 
 export const metadata: Metadata = {
-  title: "Side Projects (Lucinox & Miner's Haven) | Lê Quốc Đạt",
+  title: "Side Projects (Lucinox & Miner's Haven) | Le Quoc Dat",
   description:
-    "Các dự án cá nhân của Lê Quốc Đạt: Lucinox — thư viện mẫu website hiện đại với demo trực tiếp, và Miner's Haven — game tycoon khai thác mỏ trên Roblox.",
+    "Personal projects built by Le Quoc Dat: Lucinox — a modern website template gallery with live demos, and Miner's Haven — a Roblox mining tycoon game.",
 };
 
 export default function SideProjectsPage() {
