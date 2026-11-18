@@ -4,6 +4,7 @@ import { describe, it, expect, vi } from "vitest";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { BackToTop } from "@/components/ui/BackToTop";
 
 describe("Navbar & Footer Components", () => {
   it("renders Navbar with brand, /automation link, and working EN/VI switcher", () => {
@@ -20,7 +21,9 @@ describe("Navbar & Footer Components", () => {
     expect(autoLinks.length).toBeGreaterThan(0);
     expect(autoLinks[0]).toHaveAttribute("href", "/automation");
 
-    const langToggle = screen.getByRole("button", { name: /switch language|chuyển ngôn ngữ|en|vi/i });
+    const langToggle = screen.getByRole("button", {
+      name: /switch language|chuyển ngôn ngữ|en|vi/i,
+    });
     fireEvent.click(langToggle);
     expect(langToggle).toHaveTextContent(/EN/i);
   });
@@ -43,5 +46,89 @@ describe("Navbar & Footer Components", () => {
     const githubLink = screen.getByRole("link", { name: /github/i });
     expect(githubLink).toHaveAttribute("href", "https://github.com/losertnaw1");
   });
-});
 
+  it("renders scroll progress bar safely at 0% on zero-scroll pages and updates on window scroll", () => {
+    Object.defineProperty(document.documentElement, "scrollHeight", {
+      configurable: true,
+      value: 800,
+    });
+    Object.defineProperty(window, "innerHeight", {
+      configurable: true,
+      value: 800,
+    });
+    Object.defineProperty(window, "scrollY", {
+      configurable: true,
+      value: 0,
+    });
+
+    render(
+      <LanguageProvider>
+        <Navbar />
+      </LanguageProvider>
+    );
+
+    const progressBar = screen.getByTestId("scroll-progress-bar");
+    expect(progressBar.style.width).toBe("0%");
+
+    Object.defineProperty(document.documentElement, "scrollHeight", {
+      configurable: true,
+      value: 1800,
+    });
+    Object.defineProperty(window, "scrollY", {
+      configurable: true,
+      value: 500,
+    });
+    fireEvent.scroll(window);
+
+    expect(progressBar.style.width).toBe("50%");
+  });
+
+  it("closes open Side Projects dropdown when pressing Escape", () => {
+    render(
+      <LanguageProvider>
+        <Navbar />
+      </LanguageProvider>
+    );
+
+    const menuButton = screen.getByRole("button", {
+      name: /dự án phụ|side projects/i,
+    });
+    fireEvent.click(menuButton);
+    expect(menuButton).toHaveAttribute("aria-expanded", "true");
+
+    fireEvent.keyDown(window, { key: "Escape" });
+    expect(menuButton).toHaveAttribute("aria-expanded", "false");
+  });
+
+  it("shows BackToTop button only after scrolling past 420px and scrolls to top on click", () => {
+    const scrollToSpy = vi.fn();
+    Object.defineProperty(window, "scrollTo", {
+      configurable: true,
+      value: scrollToSpy,
+    });
+    Object.defineProperty(window, "scrollY", {
+      configurable: true,
+      value: 100,
+    });
+
+    render(
+      <LanguageProvider>
+        <BackToTop />
+      </LanguageProvider>
+    );
+
+    expect(screen.queryByTestId("back-to-top-btn")).not.toBeInTheDocument();
+
+    Object.defineProperty(window, "scrollY", {
+      configurable: true,
+      value: 500,
+    });
+    fireEvent.scroll(window);
+
+    const btn = screen.getByTestId("back-to-top-btn");
+    expect(btn).toBeInTheDocument();
+
+    fireEvent.click(btn);
+    expect(scrollToSpy).toHaveBeenCalledWith({ top: 0, behavior: "smooth" });
+  });
+});

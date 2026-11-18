@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   ArrowUpRight,
   ChevronDown,
@@ -30,33 +31,124 @@ function GitHubIcon({ className = "h-4 w-4" }: { className?: string }) {
   );
 }
 
-export function Navbar() {
+const HOME_SECTION_IDS = ["about", "skills", "projects", "education"] as const;
+
+export function Navbar(): React.JSX.Element {
   const { lang, toggleLang, t } = useLanguage();
+  const pathname = usePathname() ?? "/";
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [sideMenuOpen, setSideMenuOpen] = React.useState(false);
+  const [scrollProgress, setScrollProgress] = React.useState(0);
+  const [activeSection, setActiveSection] = React.useState<string>("about");
+
+  React.useEffect(() => {
+    const updateProgress = () => {
+      const maxScroll =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const pct =
+        maxScroll > 0
+          ? Math.min(100, Math.max(0, (window.scrollY / maxScroll) * 100))
+          : 0;
+      setScrollProgress(pct);
+    };
+
+    updateProgress();
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("resize", updateProgress);
+    return () => {
+      window.removeEventListener("scroll", updateProgress);
+      window.removeEventListener("resize", updateProgress);
+    };
+  }, []);
+
+  React.useEffect(() => {
+    if (pathname !== "/" || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    const elements = HOME_SECTION_IDS.map((id) =>
+      document.getElementById(id)
+    ).filter((el): el is HTMLElement => el !== null);
+
+    if (elements.length === 0) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        }
+      },
+      { rootMargin: "-20% 0px -55% 0px", threshold: 0.1 }
+    );
+
+    for (const el of elements) {
+      observer.observe(el);
+    }
+
+    return () => observer.disconnect();
+  }, [pathname]);
+
+  React.useEffect(() => {
+    if (!sideMenuOpen && !mobileOpen) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSideMenuOpen(false);
+        setMobileOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [sideMenuOpen, mobileOpen]);
 
   const navItems = [
     {
+      id: "about",
       href: "/#about",
       label: lang === "vi" ? "Tổng quan" : "Overview",
     },
     {
+      id: "skills",
       href: "/#skills",
       label: lang === "vi" ? "Kỹ năng" : "Tech Stack",
     },
     {
+      id: "projects",
       href: "/#projects",
       label: lang === "vi" ? "Kinh nghiệm & Dự án" : "Projects",
     },
     {
+      id: "education",
       href: "/#education",
       label: lang === "vi" ? "Học vấn" : "Education",
     },
   ];
 
+  const isAutomationActive = pathname.startsWith("/automation");
+  const isSideProjectsActive = pathname.startsWith("/side-projects");
+
   return (
     <header className="sticky top-4 z-50 px-4">
-      <div className="mx-auto max-w-6xl rounded-2xl border border-slate-800/80 bg-slate-950/85 px-4 py-3 shadow-2xl shadow-black/50 backdrop-blur-xl sm:px-6">
+      <div className="relative mx-auto max-w-6xl rounded-2xl border border-slate-800/80 bg-slate-950/85 px-4 py-3 shadow-2xl shadow-black/50 backdrop-blur-xl sm:px-6">
+        {/* Top 2px Scroll Progress Bar */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-4 top-0 h-[2px] overflow-hidden rounded-t-2xl"
+        >
+          <div
+            data-testid="scroll-progress-bar"
+            style={{ width: `${scrollProgress}%` }}
+            className="h-full bg-gradient-to-r from-emerald-400 via-cyan-400 to-sky-500 transition-[width] duration-150"
+          />
+        </div>
+
         <div className="flex items-center justify-between gap-4">
           {/* Brand Logo */}
           <Link
@@ -74,24 +166,34 @@ export function Navbar() {
 
           {/* Desktop Navigation */}
           <nav className="hidden items-center gap-1 md:flex">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-300 transition-colors hover:bg-slate-800/70 hover:text-white"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const isActive = pathname === "/" && activeSection === item.id;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  data-active={isActive ? "true" : undefined}
+                  className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
+                    isActive
+                      ? "bg-emerald-500/15 text-emerald-300"
+                      : "text-slate-300 hover:bg-slate-800/70 hover:text-white"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
 
             <Link
               href="/automation"
-              className="ml-2 hidden items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3.5 py-1.5 text-xs font-semibold text-emerald-300 transition-all hover:border-emerald-400 hover:bg-emerald-500/20 hover:text-emerald-200 lg:inline-flex"
+              className={`ml-2 hidden items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-all lg:inline-flex ${
+                isAutomationActive
+                  ? "border-emerald-400 bg-emerald-500/25 text-emerald-200 shadow-md shadow-emerald-950/40"
+                  : "border-emerald-500/40 bg-emerald-500/10 text-emerald-300 hover:border-emerald-400 hover:bg-emerald-500/20 hover:text-emerald-200"
+              }`}
             >
               <Cpu className="h-3.5 w-3.5 text-emerald-400" />
-              <span>
-                {lang === "vi" ? "Tự động hóa" : "Automation"}
-              </span>
+              <span>{lang === "vi" ? "Tự động hóa" : "Automation"}</span>
             </Link>
 
             {/* Side Projects dropdown menu */}
@@ -110,7 +212,11 @@ export function Navbar() {
                 aria-expanded={sideMenuOpen}
                 aria-haspopup="menu"
                 onClick={() => setSideMenuOpen((open) => !open)}
-                className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-sky-500/40 bg-sky-500/10 px-3.5 py-1.5 text-xs font-semibold text-sky-300 transition-all hover:border-sky-400 hover:bg-sky-500/20 hover:text-sky-200"
+                className={`inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-all ${
+                  isSideProjectsActive || sideMenuOpen
+                    ? "border-sky-400 bg-sky-500/25 text-sky-200"
+                    : "border-sky-500/40 bg-sky-500/10 text-sky-300 hover:border-sky-400 hover:bg-sky-500/20 hover:text-sky-200"
+                }`}
               >
                 <FolderCode className="h-3.5 w-3.5 text-sky-400" />
                 <span>{lang === "vi" ? "Dự án phụ" : "Side Projects"}</span>
@@ -123,7 +229,7 @@ export function Navbar() {
 
               {sideMenuOpen && (
                 <div className="absolute top-full right-0 z-50 w-80 pt-2">
-                  <div className="rounded-2xl border border-slate-800 bg-slate-950/95 p-2 shadow-2xl shadow-black/60 backdrop-blur-xl">
+                  <div className="animate-scale-fade-in rounded-2xl border border-slate-800 bg-slate-950/95 p-2 shadow-2xl shadow-black/60 backdrop-blur-xl">
                     <div className="px-3 pt-1.5 pb-1 font-mono text-[10px] font-semibold tracking-wider uppercase text-slate-500">
                       {lang === "vi"
                         ? `${portfolioData.sideProjects.length} dự án cá nhân`
@@ -183,9 +289,7 @@ export function Navbar() {
               className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-3 py-1.5 font-mono text-xs font-semibold text-sky-300 transition-colors hover:border-sky-500/60 hover:bg-slate-800"
             >
               <Globe className="h-3.5 w-3.5 text-sky-400" />
-              <span>
-                {lang === "vi" ? "VI ✓ | EN" : "EN ✓ | VI"}
-              </span>
+              <span>{lang === "vi" ? "VI ✓ | EN" : "EN ✓ | VI"}</span>
             </button>
 
             <a
@@ -212,14 +316,18 @@ export function Navbar() {
               aria-label="Mobile Drawer"
               className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-slate-800 bg-slate-900 p-2 text-slate-300 md:hidden"
             >
-              {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+              {mobileOpen ? (
+                <X className="h-4 w-4" />
+              ) : (
+                <Menu className="h-4 w-4" />
+              )}
             </button>
           </div>
         </div>
 
         {/* Mobile menu dropdown */}
         {mobileOpen && (
-          <div className="mt-3 flex flex-col gap-1.5 border-t border-slate-800/80 pt-3 md:hidden">
+          <div className="animate-scale-fade-in mt-3 flex flex-col gap-1.5 border-t border-slate-800/80 pt-3 md:hidden">
             {navItems.map((item) => (
               <Link
                 key={item.href}
