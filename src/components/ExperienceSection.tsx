@@ -23,31 +23,34 @@ export function ExperienceSection(): React.JSX.Element {
     <div className="space-y-20 py-16">
       {/* Featured Projects & Experience */}
       <section id="projects" className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-          <div>
-            <div className="font-mono text-xs font-bold tracking-wider uppercase text-emerald-400">
-              {lang === "vi"
-                ? "// DỰ ÁN & KINH NGHIỆM TRỌNG TÂM"
-                : "// FEATURED PROJECTS & PRODUCTION EXPERIENCE"}
+        <LazyAsciiSection skeletonLines={2} minHeightClassName="min-h-[96px]">
+          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+            <div>
+              <div className="font-mono text-xs font-bold tracking-wider uppercase text-emerald-400">
+                {lang === "vi"
+                  ? "// DỰ ÁN & KINH NGHIỆM TRỌNG TÂM"
+                  : "// FEATURED PROJECTS & PRODUCTION EXPERIENCE"}
+              </div>
+              <h2 className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+                {lang === "vi"
+                  ? "Các Hệ thống & Dự án Tiêu biểu"
+                  : "Key Software & Industrial Systems"}
+              </h2>
             </div>
-            <h2 className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">
-              {lang === "vi"
-                ? "Các Hệ thống & Dự án Tiêu biểu"
-                : "Key Software & Industrial Systems"}
-            </h2>
+            <Link
+              data-ascii="fade"
+              href="/automation"
+              className="inline-flex items-center gap-2 rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-2 text-xs font-semibold text-emerald-300 transition-all hover:border-emerald-400 hover:bg-emerald-500/20"
+            >
+              <Cpu className="h-4 w-4" />
+              <span>
+                {lang === "vi"
+                  ? "Mở trang Chi tiết Dự án Tự động hóa →"
+                  : "Open Dedicated Automation Projects Page →"}
+              </span>
+            </Link>
           </div>
-          <Link
-            href="/automation"
-            className="inline-flex items-center gap-2 rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-2 text-xs font-semibold text-emerald-300 transition-all hover:border-emerald-400 hover:bg-emerald-500/20"
-          >
-            <Cpu className="h-4 w-4" />
-            <span>
-              {lang === "vi"
-                ? "Mở trang Chi tiết Dự án Tự động hóa →"
-                : "Open Dedicated Automation Projects Page →"}
-            </span>
-          </Link>
-        </div>
+        </LazyAsciiSection>
 
         <div
           data-testid="career-timeline-rail"
@@ -170,16 +173,18 @@ export function ExperienceSection(): React.JSX.Element {
 
       {/* Education & Early Career Training */}
       <section id="education" className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="font-mono text-xs font-bold tracking-wider uppercase text-sky-400">
-          {lang === "vi"
-            ? "// HỌC VẤN & ĐÀO TẠO CHUYÊN MÔN"
-            : "// EDUCATION & TRAINING"}
-        </div>
-        <h2 className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">
-          {lang === "vi"
-            ? "Nền tảng Học vấn & Thực tập"
-            : "Academic Background & Fellowships"}
-        </h2>
+        <LazyAsciiSection skeletonLines={2} minHeightClassName="min-h-[84px]">
+          <div className="font-mono text-xs font-bold tracking-wider uppercase text-sky-400">
+            {lang === "vi"
+              ? "// HỌC VẤN & ĐÀO TẠO CHUYÊN MÔN"
+              : "// EDUCATION & TRAINING"}
+          </div>
+          <h2 className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            {lang === "vi"
+              ? "Nền tảng Học vấn & Thực tập"
+              : "Academic Background & Fellowships"}
+          </h2>
+        </LazyAsciiSection>
 
         <div className="mt-8 grid gap-6 md:grid-cols-3">
           {portfolioData.educationAndTraining.map((edu, index) => (

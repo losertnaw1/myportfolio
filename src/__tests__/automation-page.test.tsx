@@ -1,17 +1,32 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+import { render, screen, fireEvent, act } from "@testing-library/react";
+import { describe, it, expect, vi, afterEach } from "vitest";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { AutomationShowcase } from "@/components/AutomationShowcase";
 import { portfolioData } from "@/data/portfolio";
 
 describe("Dedicated Automation Showcase Page (/automation)", () => {
-  it("renders each automation project in its own block with image, description, and tech stack", () => {
-    render(
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
+  });
+
+  function renderAndFinishBoot() {
+    vi.useFakeTimers();
+    const utils = render(
       <LanguageProvider>
         <AutomationShowcase />
       </LanguageProvider>
     );
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
+    return utils;
+  }
+
+  it("renders each automation project in its own block with image, description, and tech stack", () => {
+    renderAndFinishBoot();
 
     for (const project of portfolioData.automationProjects) {
       expect(screen.getByText(project.title.en)).toBeInTheDocument();
@@ -24,11 +39,7 @@ describe("Dedicated Automation Showcase Page (/automation)", () => {
   });
 
   it("filters automation project blocks by category", () => {
-    render(
-      <LanguageProvider>
-        <AutomationShowcase />
-      </LanguageProvider>
-    );
+    renderAndFinishBoot();
 
     const visionFilter = screen.getByRole("button", { name: /Vision/i });
     fireEvent.click(visionFilter);
@@ -41,11 +52,7 @@ describe("Dedicated Automation Showcase Page (/automation)", () => {
   });
 
   it("opens and closes the image Lightbox modal when clicking a project preview image", () => {
-    render(
-      <LanguageProvider>
-        <AutomationShowcase />
-      </LanguageProvider>
-    );
+    renderAndFinishBoot();
 
     const zoomButtons = screen.getAllByTestId("open-lightbox-btn");
     expect(zoomButtons.length).toBeGreaterThan(0);
@@ -60,11 +67,7 @@ describe("Dedicated Automation Showcase Page (/automation)", () => {
 
   it("hides Prev/Next controls when opening Lightbox on a single-image automation project and restores body overflow on close", () => {
     document.body.style.overflow = "auto";
-    render(
-      <LanguageProvider>
-        <AutomationShowcase />
-      </LanguageProvider>
-    );
+    renderAndFinishBoot();
 
     // AUTO-02 (index 1) has exactly 1 image
     const zoomButtons = screen.getAllByTestId("open-lightbox-btn");
@@ -81,11 +84,7 @@ describe("Dedicated Automation Showcase Page (/automation)", () => {
   });
 
   it("does not render developer or AI meta-guide instructions on the public showcase", () => {
-    render(
-      <LanguageProvider>
-        <AutomationShowcase />
-      </LanguageProvider>
-    );
+    renderAndFinishBoot();
 
     expect(
       screen.queryAllByText(
@@ -94,7 +93,8 @@ describe("Dedicated Automation Showcase Page (/automation)", () => {
     ).toHaveLength(0);
   });
 
-  it("renders above-the-fold page h1 without an opacity-0 ScrollReveal wrapper", () => {
+  it("shows only AsciiSkeleton during initial 2000ms boot while keeping project anchor IDs mounted, then decodes heading", () => {
+    vi.useFakeTimers();
     vi.stubGlobal(
       "IntersectionObserver",
       vi.fn(() => ({ observe: vi.fn(), disconnect: vi.fn(), unobserve: vi.fn() }))
@@ -114,14 +114,12 @@ describe("Dedicated Automation Showcase Page (/automation)", () => {
       </LanguageProvider>
     );
 
-    const heading = screen.getByRole("heading", { level: 1 });
-    expect(heading.closest("[data-scroll-reveal]")).toBeNull();
     expect(screen.getByTestId("ascii-boot-section")).toHaveAttribute(
       "data-loading",
       "true"
     );
+    expect(screen.queryByRole("heading", { level: 1 })).not.toBeInTheDocument();
 
-    // Project anchor IDs stay mounted while off-screen cards show AsciiSkeleton
     for (const project of portfolioData.automationProjects) {
       expect(document.getElementById(project.id)).not.toBeNull();
     }
@@ -129,6 +127,11 @@ describe("Dedicated Automation Showcase Page (/automation)", () => {
       document.querySelectorAll("[data-ascii-skeleton]").length
     ).toBeGreaterThan(0);
 
-    vi.unstubAllGlobals();
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
+
+    const heading = screen.getByRole("heading", { level: 1 });
+    expect(heading.closest("[data-scroll-reveal]")).toBeNull();
   });
 });

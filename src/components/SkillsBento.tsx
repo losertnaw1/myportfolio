@@ -30,23 +30,25 @@ export function SkillsBento(): React.JSX.Element {
   return (
     <section id="skills" className="py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-          <div>
-            <div className="font-mono text-xs font-bold tracking-wider uppercase text-emerald-400">
-              {lang === "vi" ? "// NĂNG LỰC KỸ THUẬT" : "// TECHNICAL ARSENAL"}
+        <LazyAsciiSection skeletonLines={2} minHeightClassName="min-h-[96px]">
+          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+            <div>
+              <div className="font-mono text-xs font-bold tracking-wider uppercase text-emerald-400">
+                {lang === "vi" ? "// NĂNG LỰC KỸ THUẬT" : "// TECHNICAL ARSENAL"}
+              </div>
+              <h2 className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+                {lang === "vi"
+                  ? "Hệ sinh thái Công nghệ & Kỹ năng"
+                  : "Fullstack & Industrial Engineering Stack"}
+              </h2>
             </div>
-            <h2 className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            <p className="max-w-md text-sm text-slate-400">
               {lang === "vi"
-                ? "Hệ sinh thái Công nghệ & Kỹ năng"
-                : "Fullstack & Industrial Engineering Stack"}
-            </h2>
+                ? "Kết hợp giữa phát triển Web/Desktop hiện đại và lập trình giao tiếp thiết bị công nghiệp thời gian thực."
+                : "Combining modern web/desktop engineering with real-time industrial hardware integration."}
+            </p>
           </div>
-          <p className="max-w-md text-sm text-slate-400">
-            {lang === "vi"
-              ? "Kết hợp giữa phát triển Web/Desktop hiện đại và lập trình giao tiếp thiết bị công nghiệp thời gian thực."
-              : "Combining modern web/desktop engineering with real-time industrial hardware integration."}
-          </p>
-        </div>
+        </LazyAsciiSection>
 
         <div className="mt-10 grid gap-6 md:grid-cols-2">
           {portfolioData.skillGroups.map((group) => (

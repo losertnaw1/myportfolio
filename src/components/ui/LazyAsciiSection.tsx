@@ -7,6 +7,7 @@ import {
   type PresetName,
   type SkeletonVariant,
 } from "ascii-reveal";
+import { useAsciiBootStatus } from "@/components/ui/AsciiBootSection";
 
 export interface LazyAsciiSectionProps {
   children: React.ReactNode;
@@ -28,9 +29,14 @@ export function LazyAsciiSection({
   className = "",
 }: LazyAsciiSectionProps): React.JSX.Element {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const isPageBooting = useAsciiBootStatus();
   const [isRevealed, setIsRevealed] = useState<boolean>(false);
 
   useEffect(() => {
+    if (isPageBooting || isRevealed) {
+      return;
+    }
+
     if (
       typeof IntersectionObserver === "undefined" ||
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches
@@ -57,7 +63,7 @@ export function LazyAsciiSection({
 
     observer.observe(node);
     return () => observer.disconnect();
-  }, []);
+  }, [isPageBooting, isRevealed]);
 
   return (
     <div

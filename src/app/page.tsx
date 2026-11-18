@@ -1,7 +1,10 @@
+"use client";
+
 import React from "react";
 import dynamic from "next/dynamic";
 import { AsciiSkeleton } from "ascii-reveal";
 import { HeroSection } from "@/components/HeroSection";
+import { AsciiBootProvider } from "@/components/ui/AsciiBootSection";
 
 function SectionSkeleton({
   id,
@@ -26,6 +29,7 @@ function SectionSkeleton({
 const SkillsBento = dynamic(
   () => import("@/components/SkillsBento").then((mod) => mod.SkillsBento),
   {
+    ssr: false,
     loading: () => (
       <SectionSkeleton
         id="skills"
@@ -42,6 +46,7 @@ const ExperienceSection = dynamic(
       (mod) => mod.ExperienceSection
     ),
   {
+    ssr: false,
     loading: () => (
       <div>
         <SectionSkeleton
@@ -65,6 +70,7 @@ const SideProjectsPreview = dynamic(
       (mod) => mod.SideProjectsPreview
     ),
   {
+    ssr: false,
     loading: () => (
       <SectionSkeleton
         id="side-projects-preview"
@@ -77,11 +83,11 @@ const SideProjectsPreview = dynamic(
 
 export default function HomePage() {
   return (
-    <>
+    <AsciiBootProvider minDurationMs={2000}>
       <HeroSection />
       <SkillsBento />
       <ExperienceSection />
       <SideProjectsPreview />
-    </>
+    </AsciiBootProvider>
   );
 }

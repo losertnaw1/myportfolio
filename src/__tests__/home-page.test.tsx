@@ -15,12 +15,20 @@ describe("Main Portfolio Page Sections", () => {
     vi.unstubAllGlobals();
   });
 
-  it("renders HeroSection with pipeline architecture and link to /automation", () => {
+  it("renders HeroSection with pipeline architecture and link to /automation after >=2000ms ASCII boot", () => {
+    vi.useFakeTimers();
     render(
       <LanguageProvider>
         <HeroSection />
       </LanguageProvider>
     );
+
+    // Before 2000ms, only ASCII skeleton is rendered
+    expect(screen.queryByText(/Lê Quốc Đạt/i)).not.toBeInTheDocument();
+
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
 
     expect(screen.getByText(/Lê Quốc Đạt/i)).toBeInTheDocument();
     expect(screen.getAllByText(/PLC/i).length).toBeGreaterThan(0);
@@ -80,6 +88,11 @@ describe("Main Portfolio Page Sections", () => {
         <HeroSection />
       </LanguageProvider>
     );
+
+    // Complete 2000ms ASCII boot first
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
 
     expect(screen.getByText("4+")).toBeInTheDocument();
     expect(screen.getByText("< 15 ms")).toBeInTheDocument();
@@ -153,6 +166,10 @@ describe("Main Portfolio Page Sections", () => {
         <HeroSection />
       </LanguageProvider>
     );
+
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
 
     const pipelineCard = screen.getByTestId("hero-pipeline-card");
     const telemetryBar = screen.getByTestId("pipeline-telemetry-bar");

@@ -1,18 +1,33 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+import { render, screen, fireEvent, act } from "@testing-library/react";
+import { describe, it, expect, vi, afterEach } from "vitest";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { SideProjectsShowcase } from "@/components/SideProjectsShowcase";
 import { Navbar } from "@/components/Navbar";
 import { portfolioData } from "@/data/portfolio";
 
 describe("Side Projects Page (/side-projects)", () => {
-  it("renders both side projects with their overview, images and live link", () => {
-    render(
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
+  });
+
+  function renderAndFinishBoot() {
+    vi.useFakeTimers();
+    const utils = render(
       <LanguageProvider>
         <SideProjectsShowcase />
       </LanguageProvider>
     );
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
+    return utils;
+  }
+
+  it("renders both side projects with their overview, images and live link", () => {
+    renderAndFinishBoot();
 
     for (const project of portfolioData.sideProjects) {
       expect(screen.getByText(project.title.en)).toBeInTheDocument();
@@ -35,11 +50,7 @@ describe("Side Projects Page (/side-projects)", () => {
   });
 
   it("switches gallery screenshots and opens the Lightbox modal", () => {
-    render(
-      <LanguageProvider>
-        <SideProjectsShowcase />
-      </LanguageProvider>
-    );
+    renderAndFinishBoot();
 
     const thumbnails = screen.getAllByLabelText(/view image \d+|xem ảnh \d+/i);
     expect(thumbnails.length).toBe(
@@ -80,11 +91,7 @@ describe("Side Projects Page (/side-projects)", () => {
   });
 
   it("cycles Lightbox images with wrap-around via ArrowLeft/ArrowRight and Prev/Next buttons", () => {
-    render(
-      <LanguageProvider>
-        <SideProjectsShowcase />
-      </LanguageProvider>
-    );
+    renderAndFinishBoot();
 
     const lucinoxImages = portfolioData.sideProjects[0].images;
     fireEvent.click(screen.getAllByTestId("open-lightbox-btn")[0]);
@@ -106,7 +113,8 @@ describe("Side Projects Page (/side-projects)", () => {
     );
   });
 
-  it("renders above-the-fold page h1 without an opacity-0 ScrollReveal wrapper", () => {
+  it("shows only AsciiSkeleton during initial 2000ms boot while keeping project anchor IDs mounted, then decodes heading", () => {
+    vi.useFakeTimers();
     vi.stubGlobal(
       "IntersectionObserver",
       vi.fn(() => ({ observe: vi.fn(), disconnect: vi.fn(), unobserve: vi.fn() }))
@@ -126,12 +134,11 @@ describe("Side Projects Page (/side-projects)", () => {
       </LanguageProvider>
     );
 
-    const heading = screen.getByRole("heading", { level: 1 });
-    expect(heading.closest("[data-scroll-reveal]")).toBeNull();
     expect(screen.getByTestId("ascii-boot-section")).toHaveAttribute(
       "data-loading",
       "true"
     );
+    expect(screen.queryByRole("heading", { level: 1 })).not.toBeInTheDocument();
 
     for (const project of portfolioData.sideProjects) {
       expect(document.getElementById(project.id)).not.toBeNull();
@@ -140,6 +147,11 @@ describe("Side Projects Page (/side-projects)", () => {
       document.querySelectorAll("[data-ascii-skeleton]").length
     ).toBeGreaterThan(0);
 
-    vi.unstubAllGlobals();
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
+
+    const heading = screen.getByRole("heading", { level: 1 });
+    expect(heading.closest("[data-scroll-reveal]")).toBeNull();
   });
 });

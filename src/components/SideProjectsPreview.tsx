@@ -20,32 +20,35 @@ export function SideProjectsPreview(): React.JSX.Element {
   return (
     <section id="side-projects-preview" className="py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-          <div>
-            <div className="font-mono text-xs font-bold tracking-wider uppercase text-sky-400">
-              {lang === "vi"
-                ? "// DỰ ÁN CÁ NHÂN & SẢN PHẨM THỰC TẾ"
-                : "// SIDE PROJECTS & LIVE PLAYGROUND"}
+        <LazyAsciiSection skeletonLines={2} minHeightClassName="min-h-[96px]">
+          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+            <div>
+              <div className="font-mono text-xs font-bold tracking-wider uppercase text-sky-400">
+                {lang === "vi"
+                  ? "// DỰ ÁN CÁ NHÂN & SẢN PHẨM THỰC TẾ"
+                  : "// SIDE PROJECTS & LIVE PLAYGROUND"}
+              </div>
+              <h2 className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+                {lang === "vi"
+                  ? "Sản phẩm Cá nhân & Sân chơi Ngoài giờ"
+                  : "Personal Products & Creative Side Builds"}
+              </h2>
             </div>
-            <h2 className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">
-              {lang === "vi"
-                ? "Sản phẩm Cá nhân & Sân chơi Ngoài giờ"
-                : "Personal Products & Creative Side Builds"}
-            </h2>
-          </div>
 
-          <Link
-            href="/side-projects"
-            className="inline-flex items-center gap-2 rounded-xl border border-sky-500/40 bg-sky-500/10 px-4 py-2 text-xs font-semibold text-sky-300 transition-all hover:border-sky-400 hover:bg-sky-500/20"
-          >
-            <FolderCode className="h-4 w-4" />
-            <span>
-              {lang === "vi"
-                ? "Xem tất cả dự án phụ →"
-                : "View all side projects →"}
-            </span>
-          </Link>
-        </div>
+            <Link
+              data-ascii="fade"
+              href="/side-projects"
+              className="inline-flex items-center gap-2 rounded-xl border border-sky-500/40 bg-sky-500/10 px-4 py-2 text-xs font-semibold text-sky-300 transition-all hover:border-sky-400 hover:bg-sky-500/20"
+            >
+              <FolderCode className="h-4 w-4" />
+              <span>
+                {lang === "vi"
+                  ? "Xem tất cả dự án phụ →"
+                  : "View all side projects →"}
+              </span>
+            </Link>
+          </div>
+        </LazyAsciiSection>
 
         <div className="mt-10 grid gap-8 md:grid-cols-2">
           {portfolioData.sideProjects.map((project) => {
