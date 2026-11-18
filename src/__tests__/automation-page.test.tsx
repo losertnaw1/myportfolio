@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { AutomationShowcase } from "@/components/AutomationShowcase";
 import { portfolioData } from "@/data/portfolio";
@@ -87,5 +87,30 @@ describe("Dedicated Automation Showcase Page (/automation)", () => {
         /Modular Project Blocks|Cấu trúc Mở rộng Dễ dàng|src\/data\/portfolio\.ts/i
       )
     ).toHaveLength(0);
+  });
+
+  it("renders above-the-fold page h1 without an opacity-0 ScrollReveal wrapper", () => {
+    vi.stubGlobal(
+      "IntersectionObserver",
+      vi.fn(() => ({ observe: vi.fn(), disconnect: vi.fn(), unobserve: vi.fn() }))
+    );
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn().mockReturnValue({
+        matches: false,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+      })
+    );
+
+    render(
+      <LanguageProvider>
+        <AutomationShowcase />
+      </LanguageProvider>
+    );
+
+    const heading = screen.getByRole("heading", { level: 1 });
+    expect(heading.closest("[data-scroll-reveal]")).toBeNull();
+    vi.unstubAllGlobals();
   });
 });

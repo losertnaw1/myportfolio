@@ -335,52 +335,50 @@ export function SideProjectsShowcase(): React.JSX.Element {
         </Link>
 
         {/* Page Hero Header */}
-        <ScrollReveal>
-          <div className="mt-8 rounded-3xl border border-sky-500/30 bg-gradient-to-br from-sky-950/30 via-slate-900/90 to-slate-950 p-6 sm:p-10">
-            <div className="inline-flex items-center gap-2 rounded-full border border-sky-500/30 bg-sky-500/10 px-3.5 py-1 font-mono text-xs font-semibold text-sky-300">
-              <Sparkles className="h-3.5 w-3.5" />
-              <span>
-                {lang === "vi"
-                  ? "SIDE PROJECTS • DỰ ÁN CÁ NHÂN"
-                  : "SIDE PROJECTS • BUILT OUTSIDE OF WORK"}
-              </span>
-            </div>
-
-            <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
+        <div className="animate-scale-fade-in mt-8 rounded-3xl border border-sky-500/30 bg-gradient-to-br from-sky-950/30 via-slate-900/90 to-slate-950 p-6 sm:p-10">
+          <div className="inline-flex items-center gap-2 rounded-full border border-sky-500/30 bg-sky-500/10 px-3.5 py-1 font-mono text-xs font-semibold text-sky-300">
+            <Sparkles className="h-3.5 w-3.5" />
+            <span>
               {lang === "vi"
-                ? "Dự án Cá nhân & Sân chơi Ngoài giờ"
-                : "Side Projects & Things I Build for Fun"}
-            </h1>
-
-            <p className="mt-4 max-w-3xl text-sm leading-relaxed text-slate-300 sm:text-base">
-              {lang === "vi"
-                ? "Ngoài công việc chính, mình dành thời gian xây dựng các sản phẩm cá nhân: từ thư viện mẫu website giúp khách hàng chọn nhanh giao diện phù hợp đến game tycoon khai thác mỏ trên Roblox."
-                : "Outside my main job, I build personal products: from a website template gallery that helps clients pick a fitting design quickly to a mining tycoon game on Roblox."}
-            </p>
-
-            {/* Quick jump to each project */}
-            <div className="mt-8 flex flex-wrap gap-2.5">
-              <span className="rounded-xl border border-slate-800 bg-slate-950/80 px-4 py-2 font-mono text-xs text-slate-400">
-                {lang === "vi"
-                  ? `${projects.length} dự án`
-                  : `${projects.length} projects`}
-              </span>
-              {projects.map((project) => {
-                const Icon = project.kind === "web" ? Globe2 : Gamepad2;
-                return (
-                  <Link
-                    key={project.id}
-                    href={`#${project.id}`}
-                    className="inline-flex items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/80 px-4 py-2 text-xs font-semibold text-slate-300 transition-all hover:border-sky-500/40 hover:text-white"
-                  >
-                    <Icon className="h-3.5 w-3.5 text-sky-400" />
-                    <span>{t(project.menuTitle)}</span>
-                  </Link>
-                );
-              })}
-            </div>
+                ? "SIDE PROJECTS • DỰ ÁN CÁ NHÂN"
+                : "SIDE PROJECTS • BUILT OUTSIDE OF WORK"}
+            </span>
           </div>
-        </ScrollReveal>
+
+          <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
+            {lang === "vi"
+              ? "Dự án Cá nhân & Sân chơi Ngoài giờ"
+              : "Side Projects & Things I Build for Fun"}
+          </h1>
+
+          <p className="mt-4 max-w-3xl text-sm leading-relaxed text-slate-300 sm:text-base">
+            {lang === "vi"
+              ? "Ngoài công việc chính, mình dành thời gian xây dựng các sản phẩm cá nhân: từ thư viện mẫu website giúp khách hàng chọn nhanh giao diện phù hợp đến game tycoon khai thác mỏ trên Roblox."
+              : "Outside my main job, I build personal products: from a website template gallery that helps clients pick a fitting design quickly to a mining tycoon game on Roblox."}
+          </p>
+
+          {/* Quick jump to each project */}
+          <div className="mt-8 flex flex-wrap gap-2.5">
+            <span className="rounded-xl border border-slate-800 bg-slate-950/80 px-4 py-2 font-mono text-xs text-slate-400">
+              {lang === "vi"
+                ? `${projects.length} dự án`
+                : `${projects.length} projects`}
+            </span>
+            {projects.map((project) => {
+              const Icon = project.kind === "web" ? Globe2 : Gamepad2;
+              return (
+                <Link
+                  key={project.id}
+                  href={`#${project.id}`}
+                  className="inline-flex items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/80 px-4 py-2 text-xs font-semibold text-slate-300 transition-all hover:border-sky-500/40 hover:text-white"
+                >
+                  <Icon className="h-3.5 w-3.5 text-sky-400" />
+                  <span>{t(project.menuTitle)}</span>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
 
         {/* Project Blocks */}
         <div className="mt-12 space-y-10">

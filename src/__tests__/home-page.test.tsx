@@ -137,6 +137,36 @@ describe("Main Portfolio Page Sections", () => {
     expect(telemetryBar).toHaveTextContent(/10ms/i);
   });
 
+  it("keeps Hero pipeline paused when blurring focus while pointer is still hovering over the pipeline card", () => {
+    vi.useFakeTimers();
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn().mockReturnValue({
+        matches: false,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+      })
+    );
+
+    render(
+      <LanguageProvider>
+        <HeroSection />
+      </LanguageProvider>
+    );
+
+    const pipelineCard = screen.getByTestId("hero-pipeline-card");
+    const telemetryBar = screen.getByTestId("pipeline-telemetry-bar");
+
+    fireEvent.mouseEnter(pipelineCard);
+    fireEvent.focus(pipelineCard);
+    fireEvent.blur(pipelineCard, { relatedTarget: null });
+
+    act(() => {
+      vi.advanceTimersByTime(3500);
+    });
+    expect(telemetryBar).toHaveTextContent(/10ms/i);
+  });
+
   it("renders illuminated career timeline rail inside ExperienceSection", () => {
     render(
       <LanguageProvider>

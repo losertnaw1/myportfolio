@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { SideProjectsShowcase } from "@/components/SideProjectsShowcase";
 import { Navbar } from "@/components/Navbar";
@@ -105,5 +105,30 @@ describe("Side Projects Page (/side-projects)", () => {
     expect(screen.getByTestId("lightbox-counter")).toHaveTextContent(
       `1 / ${lucinoxImages.length}`
     );
+  });
+
+  it("renders above-the-fold page h1 without an opacity-0 ScrollReveal wrapper", () => {
+    vi.stubGlobal(
+      "IntersectionObserver",
+      vi.fn(() => ({ observe: vi.fn(), disconnect: vi.fn(), unobserve: vi.fn() }))
+    );
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn().mockReturnValue({
+        matches: false,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+      })
+    );
+
+    render(
+      <LanguageProvider>
+        <SideProjectsShowcase />
+      </LanguageProvider>
+    );
+
+    const heading = screen.getByRole("heading", { level: 1 });
+    expect(heading.closest("[data-scroll-reveal]")).toBeNull();
+    vi.unstubAllGlobals();
   });
 });

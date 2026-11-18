@@ -131,4 +131,57 @@ describe("Navbar & Footer Components", () => {
     fireEvent.click(btn);
     expect(scrollToSpy).toHaveBeenCalledWith({ top: 0, behavior: "smooth" });
   });
+
+  it("activates #projects with threshold 0 and clears section highlight when scrolling into #side-projects-preview", () => {
+    let observerCallback: IntersectionObserverCallback = () => {};
+    let capturedOptions: IntersectionObserverInit | undefined;
+    vi.stubGlobal(
+      "IntersectionObserver",
+      vi.fn((cb: IntersectionObserverCallback, opts?: IntersectionObserverInit) => {
+        observerCallback = cb;
+        capturedOptions = opts;
+        return { observe: vi.fn(), disconnect: vi.fn(), unobserve: vi.fn() };
+      })
+    );
+
+    render(
+      <LanguageProvider>
+        <Navbar />
+        <div id="about" />
+        <div id="skills" />
+        <div id="projects" />
+        <div id="education" />
+        <div id="side-projects-preview" />
+      </LanguageProvider>
+    );
+
+    expect(capturedOptions?.threshold).toBe(0);
+
+    const projectsEl = document.getElementById("projects")!;
+    const sidePreviewEl = document.getElementById("side-projects-preview")!;
+
+    fireEvent(window, new Event("scroll"));
+    React.act(() => {
+      observerCallback(
+        [{ isIntersecting: true, target: projectsEl } as unknown as IntersectionObserverEntry],
+        {} as IntersectionObserver
+      );
+    });
+
+    const projectsLink = screen.getByRole("link", { name: /kinh nghiệm & dự án/i });
+    expect(projectsLink).toHaveAttribute("data-active", "true");
+
+    React.act(() => {
+      observerCallback(
+        [{ isIntersecting: true, target: sidePreviewEl } as unknown as IntersectionObserverEntry],
+        {} as IntersectionObserver
+      );
+    });
+
+    expect(projectsLink).not.toHaveAttribute("data-active", "true");
+    const eduLink = screen.getByRole("link", { name: /học vấn/i });
+    expect(eduLink).not.toHaveAttribute("data-active", "true");
+
+    vi.unstubAllGlobals();
+  });
 });

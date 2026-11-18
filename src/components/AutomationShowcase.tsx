@@ -93,51 +93,49 @@ export function AutomationShowcase(): React.JSX.Element {
         </Link>
 
         {/* Page Hero Header */}
-        <ScrollReveal>
-          <div className="mt-8 rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-emerald-950/30 via-slate-900/90 to-slate-950 p-6 sm:p-10">
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 font-mono text-xs font-semibold text-emerald-300">
-              <Cpu className="h-3.5 w-3.5" />
-              <span>
-                {lang === "vi"
-                  ? "CHUYÊN TRANG DỰ ÁN TỰ ĐỘNG HÓA CÔNG NGHIỆP (03/2024 — NAY)"
-                  : "INDUSTRIAL AUTOMATION & MACHINE VISION PORTFOLIO (MAR 2024 — PRESENT)"}
-              </span>
-            </div>
-
-            <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
+        <div className="animate-scale-fade-in mt-8 rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-emerald-950/30 via-slate-900/90 to-slate-950 p-6 sm:p-10">
+          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 font-mono text-xs font-semibold text-emerald-300">
+            <Cpu className="h-3.5 w-3.5" />
+            <span>
               {lang === "vi"
-                ? "Chi tiết Các Dự án Tự động hóa & Kết nối PLC / MES"
-                : "Industrial Automation, PLC/MES & Vision Projects"}
-            </h1>
-
-            <p className="mt-4 max-w-3xl text-sm leading-relaxed text-slate-300 sm:text-base">
-              {lang === "vi"
-                ? "Trong thời gian làm việc mảng Tự động hóa công nghiệp, mình trực tiếp phụ trách end-to-end nhiều dự án thực tế tại nhà máy — từ giao tiếp PLC, thu thập dữ liệu sản xuất MES, đến tích hợp Camera công nghiệp cho hệ thống phân loại Cross-Belt Sorting."
-                : "During my industrial automation tenure, I have owned multiple end-to-end factory software systems — spanning real-time PLC communication, MES telemetry reporting, and industrial camera integration for cross-belt sorting lines."}
-            </p>
-
-            {/* Category Filter Tabs */}
-            <div className="mt-8 flex flex-wrap gap-2.5">
-              {filterOptions.map((option) => {
-                const active = selectedCategory === option.id;
-                return (
-                  <button
-                    key={option.id}
-                    type="button"
-                    onClick={() => setSelectedCategory(option.id)}
-                    className={`cursor-pointer rounded-xl border px-4 py-2 text-xs font-semibold transition-all ${
-                      active
-                        ? "border-emerald-400 bg-emerald-500/20 text-emerald-200 shadow-lg shadow-emerald-950/40"
-                        : "border-slate-800 bg-slate-900/80 text-slate-400 hover:border-slate-700 hover:text-slate-200"
-                    }`}
-                  >
-                    {t(option.label)}
-                  </button>
-                );
-              })}
-            </div>
+                ? "CHUYÊN TRANG DỰ ÁN TỰ ĐỘNG HÓA CÔNG NGHIỆP (03/2024 — NAY)"
+                : "INDUSTRIAL AUTOMATION & MACHINE VISION PORTFOLIO (MAR 2024 — PRESENT)"}
+            </span>
           </div>
-        </ScrollReveal>
+
+          <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
+            {lang === "vi"
+              ? "Chi tiết Các Dự án Tự động hóa & Kết nối PLC / MES"
+              : "Industrial Automation, PLC/MES & Vision Projects"}
+          </h1>
+
+          <p className="mt-4 max-w-3xl text-sm leading-relaxed text-slate-300 sm:text-base">
+            {lang === "vi"
+              ? "Trong thời gian làm việc mảng Tự động hóa công nghiệp, mình trực tiếp phụ trách end-to-end nhiều dự án thực tế tại nhà máy — từ giao tiếp PLC, thu thập dữ liệu sản xuất MES, đến tích hợp Camera công nghiệp cho hệ thống phân loại Cross-Belt Sorting."
+              : "During my industrial automation tenure, I have owned multiple end-to-end factory software systems — spanning real-time PLC communication, MES telemetry reporting, and industrial camera integration for cross-belt sorting lines."}
+          </p>
+
+          {/* Category Filter Tabs */}
+          <div className="mt-8 flex flex-wrap gap-2.5">
+            {filterOptions.map((option) => {
+              const active = selectedCategory === option.id;
+              return (
+                <button
+                  key={option.id}
+                  type="button"
+                  onClick={() => setSelectedCategory(option.id)}
+                  className={`cursor-pointer rounded-xl border px-4 py-2 text-xs font-semibold transition-all ${
+                    active
+                      ? "border-emerald-400 bg-emerald-500/20 text-emerald-200 shadow-lg shadow-emerald-950/40"
+                      : "border-slate-800 bg-slate-900/80 text-slate-400 hover:border-slate-700 hover:text-slate-200"
+                  }`}
+                >
+                  {t(option.label)}
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
         {/* Dedicated Project Blocks (1 Block per Project) */}
         <div className="mt-12 space-y-10">

@@ -31,7 +31,13 @@ function GitHubIcon({ className = "h-4 w-4" }: { className?: string }) {
   );
 }
 
-const HOME_SECTION_IDS = ["about", "skills", "projects", "education"] as const;
+const HOME_SECTION_IDS = [
+  "about",
+  "skills",
+  "projects",
+  "education",
+  "side-projects-preview",
+] as const;
 
 export function Navbar(): React.JSX.Element {
   const { lang, toggleLang, t } = useLanguage();
@@ -62,7 +68,12 @@ export function Navbar(): React.JSX.Element {
   }, []);
 
   React.useEffect(() => {
-    if (pathname !== "/" || typeof IntersectionObserver === "undefined") {
+    if (pathname !== "/") {
+      setActiveSection("about");
+      return;
+    }
+
+    if (typeof IntersectionObserver === "undefined") {
       return;
     }
 
@@ -82,7 +93,7 @@ export function Navbar(): React.JSX.Element {
           }
         }
       },
-      { rootMargin: "-20% 0px -55% 0px", threshold: 0.1 }
+      { rootMargin: "-20% 0px -55% 0px", threshold: 0 }
     );
 
     for (const el of elements) {
@@ -132,7 +143,9 @@ export function Navbar(): React.JSX.Element {
   ];
 
   const isAutomationActive = pathname.startsWith("/automation");
-  const isSideProjectsActive = pathname.startsWith("/side-projects");
+  const isSideProjectsActive =
+    pathname.startsWith("/side-projects") ||
+    (pathname === "/" && activeSection === "side-projects-preview");
 
   return (
     <header className="sticky top-4 z-50 px-4">

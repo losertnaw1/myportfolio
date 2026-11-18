@@ -19,7 +19,9 @@ import { portfolioData } from "@/data/portfolio";
 export function HeroSection(): React.JSX.Element {
   const { lang, t } = useLanguage();
   const [activeLayer, setActiveLayer] = useState<number>(0);
-  const [isPaused, setIsPaused] = useState<boolean>(false);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
+  const isPaused = isHovered || isFocused;
 
   useEffect(() => {
     if (
@@ -151,10 +153,18 @@ export function HeroSection(): React.JSX.Element {
           <div className="lg:col-span-5">
             <div
               data-testid="hero-pipeline-card"
-              onMouseEnter={() => setIsPaused(true)}
-              onMouseLeave={() => setIsPaused(false)}
-              onFocus={() => setIsPaused(true)}
-              onBlur={() => setIsPaused(false)}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              onFocus={() => setIsFocused(true)}
+              onBlur={(event) => {
+                if (
+                  !event.currentTarget.contains(
+                    event.relatedTarget as Node | null
+                  )
+                ) {
+                  setIsFocused(false);
+                }
+              }}
               className="rounded-2xl border border-slate-800/90 bg-slate-900/75 p-5 shadow-2xl backdrop-blur-md transition-colors hover:border-emerald-500/30 sm:p-6"
             >
               <div className="flex items-center justify-between border-b border-slate-800 pb-3.5">
