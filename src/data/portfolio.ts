@@ -420,15 +420,6 @@ export const portfolioData = {
     },
   ] as FeaturedProject[],
 
-  /**
-   * ============================================================================
-   * DANH SÁCH CHI TIẾT CÁC DỰ ÁN TỰ ĐỘNG HÓA (TRANG /automation)
-   * Mỗi phần tử dưới đây sẽ tự động hiển thị thành 1 Block độc lập gồm:
-   * - Khung ảnh / sơ đồ (hỗ trợ nhiều ảnh + click phóng to Lightbox)
-   * - Tiêu đề, Thời gian, Vai trò, Mô tả chi tiết, Điểm nhấn kỹ thuật & Tech Stack
-   * Bạn có thể dễ dàng sửa nội dung hoặc copy thêm object mới vào mảng này!
-   * ============================================================================
-   */
   automationProjects: [
     {
       id: "cross-belt-sorting-vision",
@@ -753,14 +744,6 @@ export const portfolioData = {
     },
   ] as AutomationProjectBlock[],
 
-  /**
-   * ============================================================================
-   * DỰ ÁN CÁ NHÂN / SIDE PROJECTS (TRANG /side-projects)
-   * Mỗi object render thành 1 block: gallery ảnh + overview + tech stack.
-   * Ảnh Lucinox là ảnh chụp thật từ lucinox.vercel.app (public/images/side-projects).
-   * Ảnh Miner's Haven là ảnh chụp in-game thật (màn hình vào game, Shop/Inventory, dây chuyền kiếm tiền).
-   * ============================================================================
-   */
   sideProjects: [
     {
       id: "lucinox-web-templates",

@@ -52,5 +52,40 @@ describe("Dedicated Automation Showcase Page (/automation)", () => {
     fireEvent.click(closeBtn);
     expect(screen.queryByTestId("lightbox-modal")).not.toBeInTheDocument();
   });
-});
 
+  it("hides Prev/Next controls when opening Lightbox on a single-image automation project and restores body overflow on close", () => {
+    document.body.style.overflow = "auto";
+    render(
+      <LanguageProvider>
+        <AutomationShowcase />
+      </LanguageProvider>
+    );
+
+    // AUTO-02 (index 1) has exactly 1 image
+    const zoomButtons = screen.getAllByTestId("open-lightbox-btn");
+    fireEvent.click(zoomButtons[1]);
+
+    expect(screen.getByTestId("lightbox-modal")).toBeInTheDocument();
+    expect(document.body.style.overflow).toBe("hidden");
+    expect(screen.queryByTestId("lightbox-prev-btn")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("lightbox-next-btn")).not.toBeInTheDocument();
+
+    fireEvent.keyDown(window, { key: "Escape" });
+    expect(screen.queryByTestId("lightbox-modal")).not.toBeInTheDocument();
+    expect(document.body.style.overflow).toBe("auto");
+  });
+
+  it("does not render developer or AI meta-guide instructions on the public showcase", () => {
+    render(
+      <LanguageProvider>
+        <AutomationShowcase />
+      </LanguageProvider>
+    );
+
+    expect(
+      screen.queryAllByText(
+        /Modular Project Blocks|Cấu trúc Mở rộng Dễ dàng|src\/data\/portfolio\.ts/i
+      )
+    ).toHaveLength(0);
+  });
+});

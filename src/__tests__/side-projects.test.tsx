@@ -22,7 +22,9 @@ describe("Side Projects Page (/side-projects)", () => {
     expect(screen.getByText(lucinox.overview.vi[0])).toBeInTheDocument();
     expect(screen.getByText(lucinox.highlights.vi[0])).toBeInTheDocument();
 
-    const liveLink = screen.getByRole("link", { name: /mở website trực tiếp/i });
+    const liveLink = screen.getByRole("link", {
+      name: /mở website trực tiếp/i,
+    });
     expect(liveLink).toHaveAttribute("href", "https://lucinox.vercel.app");
 
     const minersHaven = portfolioData.sideProjects[1];
@@ -64,7 +66,9 @@ describe("Side Projects Page (/side-projects)", () => {
       </LanguageProvider>
     );
 
-    const menuButton = screen.getByRole("button", { name: /dự án phụ|side projects/i });
+    const menuButton = screen.getByRole("button", {
+      name: /dự án phụ|side projects/i,
+    });
     expect(menuButton).toHaveAttribute("aria-expanded", "false");
 
     fireEvent.click(menuButton);
@@ -74,5 +78,32 @@ describe("Side Projects Page (/side-projects)", () => {
       name: new RegExp(portfolioData.sideProjects[1].menuTitle.vi, "i"),
     });
     expect(projectLink).toHaveAttribute("href", "/side-projects#miners-haven");
+  });
+
+  it("cycles Lightbox images with wrap-around via ArrowLeft/ArrowRight and Prev/Next buttons", () => {
+    render(
+      <LanguageProvider>
+        <SideProjectsShowcase />
+      </LanguageProvider>
+    );
+
+    const lucinoxImages = portfolioData.sideProjects[0].images;
+    fireEvent.click(screen.getAllByTestId("open-lightbox-btn")[0]);
+
+    expect(screen.getByTestId("lightbox-counter")).toHaveTextContent(
+      `1 / ${lucinoxImages.length}`
+    );
+
+    // Wrap backward from index 0 -> last image
+    fireEvent.keyDown(window, { key: "ArrowLeft" });
+    expect(screen.getByTestId("lightbox-counter")).toHaveTextContent(
+      `${lucinoxImages.length} / ${lucinoxImages.length}`
+    );
+
+    // Wrap forward from last image -> index 0 via Next button
+    fireEvent.click(screen.getByTestId("lightbox-next-btn"));
+    expect(screen.getByTestId("lightbox-counter")).toHaveTextContent(
+      `1 / ${lucinoxImages.length}`
+    );
   });
 });
