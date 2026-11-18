@@ -13,6 +13,7 @@ export interface LazyAsciiSectionProps {
   children: React.ReactNode;
   skeletonLines?: number;
   skeletonRows?: number;
+  minDurationMs?: number;
   minHeightClassName?: string;
   variant?: SkeletonVariant;
   preset?: PresetName;
@@ -23,6 +24,7 @@ export function LazyAsciiSection({
   children,
   skeletonLines = 4,
   skeletonRows,
+  minDurationMs = 1400,
   minHeightClassName = "",
   variant = "dither",
   preset = "decode",
@@ -30,10 +32,11 @@ export function LazyAsciiSection({
 }: LazyAsciiSectionProps): React.JSX.Element {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const isPageBooting = useAsciiBootStatus();
+  const [hasIntersected, setHasIntersected] = useState<boolean>(false);
   const [isRevealed, setIsRevealed] = useState<boolean>(false);
 
   useEffect(() => {
-    if (isPageBooting || isRevealed) {
+    if (isPageBooting || isRevealed || hasIntersected) {
       return;
     }
 
@@ -54,16 +57,29 @@ export function LazyAsciiSection({
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries.some((entry) => entry.isIntersecting)) {
-          setIsRevealed(true);
+          setHasIntersected(true);
           observer.disconnect();
         }
       },
-      { rootMargin: "120px 0px", threshold: 0.01 }
+      { rootMargin: "0px 0px -30px 0px", threshold: 0.05 }
     );
 
     observer.observe(node);
     return () => observer.disconnect();
-  }, [isPageBooting, isRevealed]);
+  }, [isPageBooting, isRevealed, hasIntersected]);
+
+  useEffect(() => {
+    if (!hasIntersected || isRevealed) {
+      return;
+    }
+
+    const waitMs = Math.max(0, minDurationMs);
+    const timer = window.setTimeout(() => {
+      setIsRevealed(true);
+    }, waitMs);
+
+    return () => window.clearTimeout(timer);
+  }, [hasIntersected, isRevealed, minDurationMs]);
 
   return (
     <div
@@ -75,7 +91,8 @@ export function LazyAsciiSection({
       {isRevealed ? (
         <AsciiReveal
           preset={preset}
-          duration="fast"
+          duration="cinematic"
+          speed={1.5}
           revealOnMount
           lazy={false}
           className="h-full"

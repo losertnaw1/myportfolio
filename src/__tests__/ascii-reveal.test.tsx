@@ -130,12 +130,22 @@ describe("ASCII Reveal Loading (>= 2s) & Viewport Lazy Loading", () => {
     act(() => {
       vi.advanceTimersByTime(500);
     });
-    // Now boot finished; when observer intersects, content reveals
+    // Boot finished; when observer intersects, skeleton holds for 1400ms (1.4s) before decoding
     act(() => {
       observerCallback(
         [{ isIntersecting: true } as IntersectionObserverEntry],
         {} as IntersectionObserver
       );
+    });
+    expect(screen.queryByTestId("below-hero-block")).not.toBeInTheDocument();
+
+    act(() => {
+      vi.advanceTimersByTime(1399);
+    });
+    expect(screen.queryByTestId("below-hero-block")).not.toBeInTheDocument();
+
+    act(() => {
+      vi.advanceTimersByTime(1);
     });
     expect(screen.getByTestId("below-hero-block")).toBeInTheDocument();
   });
@@ -161,7 +171,8 @@ describe("ASCII Reveal Loading (>= 2s) & Viewport Lazy Loading", () => {
     expect(boot).toHaveAttribute("data-loading", "false");
   });
 
-  it("renders AsciiSkeleton lazily until IntersectionObserver intersects, then mounts children with AsciiReveal", () => {
+  it("renders AsciiSkeleton lazily for 1400ms after IntersectionObserver intersects, then decodes children with AsciiReveal", () => {
+    vi.useFakeTimers();
     let observerCallback: IntersectionObserverCallback = () => {};
     const disconnect = vi.fn();
     vi.stubGlobal(
@@ -197,11 +208,22 @@ describe("ASCII Reveal Loading (>= 2s) & Viewport Lazy Loading", () => {
         {} as IntersectionObserver
       );
     });
+    expect(disconnect).toHaveBeenCalled();
+    expect(wrapper).toHaveAttribute("data-revealed", "false");
+    expect(screen.queryByTestId("heavy-lazy-card")).not.toBeInTheDocument();
+
+    act(() => {
+      vi.advanceTimersByTime(1399);
+    });
+    expect(wrapper).toHaveAttribute("data-revealed", "false");
+
+    act(() => {
+      vi.advanceTimersByTime(1);
+    });
 
     expect(wrapper).toHaveAttribute("data-revealed", "true");
     expect(container.querySelector("[data-ascii-skeleton]")).toBeNull();
     expect(screen.getByTestId("heavy-lazy-card")).toBeInTheDocument();
-    expect(disconnect).toHaveBeenCalled();
   });
 
   it("mounts LazyAsciiSection children immediately when IntersectionObserver is unavailable", () => {
