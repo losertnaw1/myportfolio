@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { portfolioData } from "@/data/portfolio";
+import { AsciiBootSection } from "@/components/ui/AsciiBootSection";
 
 export function HeroSection(): React.JSX.Element {
   const { lang, t } = useLanguage();
@@ -59,11 +60,17 @@ export function HeroSection(): React.JSX.Element {
         className="animate-float-slow pointer-events-none absolute top-16 right-1/4 h-80 w-80 rounded-full bg-sky-500/10 blur-3xl"
       />
 
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+      <AsciiBootSection
+        minDurationMs={2000}
+        className="relative mx-auto max-w-6xl px-4 sm:px-6"
+      >
         <div className="grid items-center gap-12 lg:grid-cols-12">
           {/* Left Column: Engineer Identity, CTAs & Impact Stats */}
           <div className="lg:col-span-7">
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 font-mono text-xs font-medium text-emerald-300">
+            <div
+              data-ascii="fade"
+              className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 font-mono text-xs font-medium text-emerald-300"
+            >
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
@@ -84,11 +91,15 @@ export function HeroSection(): React.JSX.Element {
 
             {/* Quick Metadata Pills */}
             <div className="mt-6 flex flex-wrap items-center gap-3 text-xs text-slate-400">
-              <span className="inline-flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/80 px-3 py-1.5">
+              <span
+                data-ascii="fade"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/80 px-3 py-1.5"
+              >
                 <MapPin className="h-3.5 w-3.5 text-emerald-400" />
                 {t(portfolioData.profile.location)}
               </span>
               <a
+                data-ascii="fade"
                 href={`mailto:${portfolioData.profile.email}`}
                 className="inline-flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/80 px-3 py-1.5 transition-colors hover:border-emerald-500/50 hover:text-white"
               >
@@ -96,6 +107,7 @@ export function HeroSection(): React.JSX.Element {
                 {portfolioData.profile.email}
               </a>
               <a
+                data-ascii="fade"
                 href={`tel:${portfolioData.profile.phone}`}
                 className="inline-flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/80 px-3 py-1.5 font-mono transition-colors hover:border-emerald-500/50 hover:text-white"
               >
@@ -107,6 +119,7 @@ export function HeroSection(): React.JSX.Element {
             {/* Primary & Secondary CTAs */}
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Link
+                data-ascii="fade"
                 href="/automation"
                 className="group inline-flex items-center gap-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-600 px-6 py-3.5 text-sm font-bold text-slate-950 shadow-lg shadow-emerald-950/60 transition-all hover:-translate-y-0.5 hover:from-emerald-400 hover:to-cyan-500"
               >
@@ -120,6 +133,7 @@ export function HeroSection(): React.JSX.Element {
               </Link>
 
               <a
+                data-ascii="fade"
                 href="#projects"
                 className="inline-flex items-center gap-2 rounded-xl border border-slate-700/80 bg-slate-900/80 px-5 py-3.5 text-sm font-semibold text-slate-200 transition-colors hover:border-slate-600 hover:bg-slate-800 hover:text-white"
               >
@@ -136,6 +150,7 @@ export function HeroSection(): React.JSX.Element {
               {portfolioData.heroStats.map((stat) => (
                 <div
                   key={stat.value}
+                  data-ascii="surface"
                   className="rounded-xl border border-slate-800/80 bg-slate-900/60 px-3.5 py-2.5 backdrop-blur-sm transition-colors hover:border-emerald-500/40"
                 >
                   <div className="font-mono text-lg font-extrabold text-emerald-400 sm:text-xl">
@@ -153,6 +168,7 @@ export function HeroSection(): React.JSX.Element {
           <div className="lg:col-span-5">
             <div
               data-testid="hero-pipeline-card"
+              data-ascii="surface"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               onFocus={() => setIsFocused(true)}
@@ -258,7 +274,7 @@ export function HeroSection(): React.JSX.Element {
             </div>
           </div>
         </div>
-      </div>
+      </AsciiBootSection>
     </section>
   );
 }

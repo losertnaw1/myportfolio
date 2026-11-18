@@ -65,12 +65,15 @@ export function SpotlightCard({
 
   const Component = as;
   const glowColor = ACCENT_GRADIENTS[accent];
+  const asciiRole =
+    (rest as Record<string, unknown>)["data-ascii"] ?? "surface";
 
   return (
     <Component
       ref={(node: HTMLElement | null) => {
         cardRef.current = node;
       }}
+      data-ascii={asciiRole as string}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={`group/spotlight relative overflow-hidden ${className}`.trim()}

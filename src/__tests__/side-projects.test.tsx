@@ -29,10 +29,9 @@ describe("Side Projects Page (/side-projects)", () => {
 
     const minersHaven = portfolioData.sideProjects[1];
     expect(screen.getByText(minersHaven.overview.en[0])).toBeInTheDocument();
-    expect(screen.getByAltText(minersHaven.images[0].alt.en)).toHaveAttribute(
-      "src",
-      minersHaven.images[0].src
-    );
+    const coverImg = screen.getByAltText(minersHaven.images[0].alt.en);
+    expect(coverImg).toHaveAttribute("src", minersHaven.images[0].src);
+    expect(coverImg).toHaveAttribute("loading", "lazy");
   });
 
   it("switches gallery screenshots and opens the Lightbox modal", () => {
@@ -129,6 +128,18 @@ describe("Side Projects Page (/side-projects)", () => {
 
     const heading = screen.getByRole("heading", { level: 1 });
     expect(heading.closest("[data-scroll-reveal]")).toBeNull();
+    expect(screen.getByTestId("ascii-boot-section")).toHaveAttribute(
+      "data-loading",
+      "true"
+    );
+
+    for (const project of portfolioData.sideProjects) {
+      expect(document.getElementById(project.id)).not.toBeNull();
+    }
+    expect(
+      document.querySelectorAll("[data-ascii-skeleton]").length
+    ).toBeGreaterThan(0);
+
     vi.unstubAllGlobals();
   });
 });

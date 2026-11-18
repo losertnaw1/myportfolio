@@ -31,6 +31,7 @@ if (typeof window !== "undefined") {
 
   if (typeof HTMLCanvasElement !== "undefined") {
     HTMLCanvasElement.prototype.getContext = function getContextStub(
+      this: HTMLCanvasElement,
       contextId: string
     ) {
       if (contextId !== "2d") {

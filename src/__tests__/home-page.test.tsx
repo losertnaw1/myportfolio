@@ -196,5 +196,52 @@ describe("Main Portfolio Page Sections", () => {
       name: /xem tất cả dự án phụ|view all side projects/i,
     });
     expect(viewAllLink).toHaveAttribute("href", "/side-projects");
+
+    for (const sp of portfolioData.sideProjects) {
+      expect(screen.getByAltText(sp.images[0].alt.en)).toHaveAttribute(
+        "loading",
+        "lazy"
+      );
+    }
+  });
+
+  it("wraps HeroSection in AsciiBootSection (>=2000ms) and lazy-renders home sections with AsciiSkeleton while preserving section anchor IDs", () => {
+    vi.useFakeTimers();
+    vi.stubGlobal(
+      "IntersectionObserver",
+      vi.fn(() => ({ observe: vi.fn(), disconnect: vi.fn(), unobserve: vi.fn() }))
+    );
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn().mockReturnValue({
+        matches: false,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+      })
+    );
+
+    const { container } = render(
+      <LanguageProvider>
+        <HeroSection />
+        <SkillsBento />
+        <ExperienceSection />
+        <SideProjectsPreview />
+      </LanguageProvider>
+    );
+
+    const boot = screen.getByTestId("ascii-boot-section");
+    expect(boot).toHaveAttribute("data-loading", "true");
+
+    // Outer section IDs exist immediately for Navbar scroll-spy & hash links even while lazy-unrevealed
+    expect(document.getElementById("skills")).not.toBeNull();
+    expect(document.getElementById("projects")).not.toBeNull();
+    expect(document.getElementById("education")).not.toBeNull();
+    expect(document.getElementById("side-projects-preview")).not.toBeNull();
+    expect(container.querySelectorAll("[data-ascii-skeleton]").length).toBeGreaterThan(0);
+
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
+    expect(boot).toHaveAttribute("data-loading", "false");
   });
 });

@@ -111,6 +111,19 @@ describe("Dedicated Automation Showcase Page (/automation)", () => {
 
     const heading = screen.getByRole("heading", { level: 1 });
     expect(heading.closest("[data-scroll-reveal]")).toBeNull();
+    expect(screen.getByTestId("ascii-boot-section")).toHaveAttribute(
+      "data-loading",
+      "true"
+    );
+
+    // Project anchor IDs stay mounted while off-screen cards show AsciiSkeleton
+    for (const project of portfolioData.automationProjects) {
+      expect(document.getElementById(project.id)).not.toBeNull();
+    }
+    expect(
+      document.querySelectorAll("[data-ascii-skeleton]").length
+    ).toBeGreaterThan(0);
+
     vi.unstubAllGlobals();
   });
 });
