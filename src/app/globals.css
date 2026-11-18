@@ -18,3 +18,106 @@ body {
   min-height: 100vh;
 }
 
+/* Custom Sleek Dark Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #070b12;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #10b981;
+}
+
+/* Motion & Telemetry Keyframes */
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(12px, -16px, 0) scale(1.05);
+  }
+}
+
+@keyframes text-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes telemetry-flow {
+  0% {
+    opacity: 0.35;
+    transform: translateY(-3px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(3px);
+  }
+  100% {
+    opacity: 0.35;
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes scale-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.animate-text-shimmer {
+  background-size: 200% auto;
+  animation: text-shimmer 6s ease-in-out infinite;
+}
+
+.animate-telemetry-flow {
+  animation: telemetry-flow 1.8s ease-in-out infinite;
+}
+
+.animate-scale-fade-in {
+  animation: scale-fade-in 0.18s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-float-slow,
+  .animate-text-shimmer,
+  .animate-telemetry-flow,
+  .animate-scale-fade-in {
+    animation: none !important;
+  }
+
+  [data-scroll-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
