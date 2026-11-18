@@ -24,7 +24,7 @@ export function LazyAsciiSection({
   children,
   skeletonLines = 4,
   skeletonRows,
-  minDurationMs = 1400,
+  minDurationMs = 1000,
   minHeightClassName = "",
   variant = "dither",
   preset = "decode",
