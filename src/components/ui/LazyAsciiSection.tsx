@@ -12,6 +12,7 @@ export interface LazyAsciiSectionProps {
   children: React.ReactNode;
   skeletonLines?: number;
   skeletonRows?: number;
+  minHeightClassName?: string;
   variant?: SkeletonVariant;
   preset?: PresetName;
   className?: string;
@@ -21,6 +22,7 @@ export function LazyAsciiSection({
   children,
   skeletonLines = 4,
   skeletonRows,
+  minHeightClassName = "",
   variant = "dither",
   preset = "decode",
   className = "",
@@ -75,7 +77,9 @@ export function LazyAsciiSection({
           {children}
         </AsciiReveal>
       ) : (
-        <div className="rounded-2xl border border-slate-800/60 bg-slate-900/35 p-6 text-slate-600">
+        <div
+          className={`rounded-2xl border border-slate-800/60 bg-slate-900/35 p-6 text-slate-600 ${minHeightClassName}`.trim()}
+        >
           <AsciiSkeleton
             variant={variant}
             lines={skeletonRows ? undefined : skeletonLines}

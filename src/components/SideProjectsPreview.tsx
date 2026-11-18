@@ -57,6 +57,7 @@ export function SideProjectsPreview(): React.JSX.Element {
               <LazyAsciiSection
                 key={project.id}
                 skeletonRows={10}
+                minHeightClassName="min-h-[420px]"
                 className="h-full"
               >
                 <SpotlightCard

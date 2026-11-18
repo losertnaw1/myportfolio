@@ -187,4 +187,38 @@ describe("Navbar & Footer Components", () => {
 
     vi.unstubAllGlobals();
   });
+
+  it("re-observes home section elements when next/dynamic replaces a skeleton section node in the DOM", async () => {
+    const observedNodes: Element[] = [];
+    vi.stubGlobal(
+      "IntersectionObserver",
+      vi.fn(() => ({
+        observe: (el: Element) => observedNodes.push(el),
+        disconnect: vi.fn(),
+        unobserve: vi.fn(),
+      }))
+    );
+
+    const { container } = render(
+      <LanguageProvider>
+        <Navbar />
+        <main id="host">
+          <section id="projects" data-phase="skeleton" />
+        </main>
+      </LanguageProvider>
+    );
+
+    const host = container.querySelector("#host")!;
+    const replacement = document.createElement("section");
+    replacement.id = "projects";
+    replacement.setAttribute("data-phase", "loaded");
+
+    await React.act(async () => {
+      host.replaceChildren(replacement);
+      await Promise.resolve();
+    });
+
+    expect(observedNodes).toContain(replacement);
+    vi.unstubAllGlobals();
+  });
 });

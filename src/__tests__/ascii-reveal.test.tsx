@@ -142,4 +142,28 @@ describe("ASCII Reveal Loading (>= 2s) & Viewport Lazy Loading", () => {
       "true"
     );
   });
+
+  it("applies minHeightClassName to LazyAsciiSection skeleton placeholder to prevent smooth-scroll overshoot", () => {
+    vi.stubGlobal(
+      "IntersectionObserver",
+      vi.fn(() => ({ observe: vi.fn(), disconnect: vi.fn(), unobserve: vi.fn() }))
+    );
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn().mockReturnValue({
+        matches: false,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+      })
+    );
+
+    render(
+      <LazyAsciiSection minHeightClassName="min-h-[340px]">
+        <div>Deferred Block</div>
+      </LazyAsciiSection>
+    );
+
+    const wrapper = screen.getByTestId("lazy-ascii-section");
+    expect(wrapper.firstElementChild?.className).toContain("min-h-[340px]");
+  });
 });

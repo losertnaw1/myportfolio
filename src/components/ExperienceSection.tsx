@@ -82,7 +82,10 @@ export function ExperienceSection(): React.JSX.Element {
                   />
                 </span>
 
-                <LazyAsciiSection skeletonLines={6}>
+                <LazyAsciiSection
+                  skeletonLines={6}
+                  minHeightClassName="min-h-[340px]"
+                >
                   <SpotlightCard
                     as="article"
                     accent={isAutomation ? "emerald" : "sky"}
@@ -183,6 +186,7 @@ export function ExperienceSection(): React.JSX.Element {
             <LazyAsciiSection
               key={edu.id}
               skeletonLines={4}
+              minHeightClassName="min-h-[220px]"
               className="h-full"
             >
               <SpotlightCard

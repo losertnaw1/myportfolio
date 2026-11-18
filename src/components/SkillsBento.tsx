@@ -53,6 +53,7 @@ export function SkillsBento(): React.JSX.Element {
             <LazyAsciiSection
               key={group.id}
               skeletonLines={4}
+              minHeightClassName="min-h-[220px]"
               className="h-full"
             >
               <SpotlightCard

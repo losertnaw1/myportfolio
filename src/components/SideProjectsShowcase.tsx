@@ -54,7 +54,7 @@ function ProjectGalleryImage({
           alt={alt}
           loading="lazy"
           decoding="async"
-          className="animate-scale-fade-in h-full w-auto rounded-xl border border-slate-700 object-contain shadow-2xl shadow-black/60"
+          className="h-full w-auto rounded-xl border border-slate-700 object-contain shadow-2xl shadow-black/60"
         />
       </div>
     );
@@ -67,7 +67,7 @@ function ProjectGalleryImage({
       alt={alt}
       loading="lazy"
       decoding="async"
-      className="animate-scale-fade-in aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+      className="aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
     />
   );
 }
@@ -93,7 +93,10 @@ export function SideProjectsShowcase(): React.JSX.Element {
 
     return (
       <div key={project.id} id={project.id} className="scroll-mt-28">
-        <LazyAsciiSection skeletonRows={12}>
+        <LazyAsciiSection
+          skeletonRows={12}
+          minHeightClassName="min-h-[520px]"
+        >
           <SpotlightCard
             as="article"
             accent={isWeb ? "emerald" : "amber"}

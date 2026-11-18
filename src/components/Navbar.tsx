@@ -77,30 +77,55 @@ export function Navbar(): React.JSX.Element {
       return;
     }
 
-    const elements = HOME_SECTION_IDS.map((id) =>
-      document.getElementById(id)
-    ).filter((el): el is HTMLElement => el !== null);
+    let io: IntersectionObserver | null = null;
+    let boundElements: HTMLElement[] = [];
 
-    if (elements.length === 0) {
-      return;
-    }
+    const bindObserver = () => {
+      const nextElements = HOME_SECTION_IDS.map((id) =>
+        document.getElementById(id)
+      ).filter((el): el is HTMLElement => el !== null);
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
+      if (
+        nextElements.length === boundElements.length &&
+        nextElements.every((el, idx) => el === boundElements[idx])
+      ) {
+        return;
+      }
+
+      io?.disconnect();
+      boundElements = nextElements;
+      if (nextElements.length === 0) {
+        return;
+      }
+
+      io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              setActiveSection(entry.target.id);
+            }
           }
-        }
-      },
-      { rootMargin: "-20% 0px -55% 0px", threshold: 0 }
-    );
+        },
+        { rootMargin: "-20% 0px -55% 0px", threshold: 0 }
+      );
 
-    for (const el of elements) {
-      observer.observe(el);
-    }
+      for (const el of nextElements) {
+        io.observe(el);
+      }
+    };
 
-    return () => observer.disconnect();
+    bindObserver();
+
+    const mo =
+      typeof MutationObserver !== "undefined"
+        ? new MutationObserver(() => bindObserver())
+        : null;
+    mo?.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      mo?.disconnect();
+      io?.disconnect();
+    };
   }, [pathname]);
 
   React.useEffect(() => {

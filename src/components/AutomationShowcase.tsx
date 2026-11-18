@@ -156,7 +156,10 @@ export function AutomationShowcase(): React.JSX.Element {
 
             return (
               <div key={project.id} id={project.id} className="scroll-mt-28">
-                <LazyAsciiSection skeletonRows={10}>
+                <LazyAsciiSection
+                  skeletonRows={10}
+                  minHeightClassName="min-h-[480px]"
+                >
                   <SpotlightCard
                     as="article"
                     accent="emerald"
@@ -196,7 +199,7 @@ export function AutomationShowcase(): React.JSX.Element {
                               alt={t(currentImage.alt)}
                               loading="lazy"
                               decoding="async"
-                              className="animate-scale-fade-in aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                              className="aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                             />
                             <button
                               type="button"

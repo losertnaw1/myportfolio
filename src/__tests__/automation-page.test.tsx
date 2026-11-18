@@ -16,6 +16,11 @@ describe("Dedicated Automation Showcase Page (/automation)", () => {
     for (const project of portfolioData.automationProjects) {
       expect(screen.getByText(project.title.en)).toBeInTheDocument();
     }
+
+    const firstDiagram = screen.getByAltText(
+      portfolioData.automationProjects[0].images[0].alt.en
+    );
+    expect(firstDiagram.className).not.toContain("animate-scale-fade-in");
   });
 
   it("filters automation project blocks by category", () => {
