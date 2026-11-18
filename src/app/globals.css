@@ -2,6 +2,12 @@
 
 :root {
   color-scheme: dark;
+  --ascii-accent: #10b981;
+  --ascii-flash: #34d399;
+  --ascii-glyph: #64748b;
+  --ascii-skeleton: #334155;
+  --ascii-surface: #070b12;
+  --ascii-font: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
 }
 
 html {
