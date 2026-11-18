@@ -5,6 +5,8 @@ import { LanguageProvider } from "@/context/LanguageContext";
 import { HeroSection } from "@/components/HeroSection";
 import { SkillsBento } from "@/components/SkillsBento";
 import { ExperienceSection } from "@/components/ExperienceSection";
+import { SideProjectsPreview } from "@/components/SideProjectsPreview";
+import { portfolioData } from "@/data/portfolio";
 
 describe("Main Portfolio Page Sections", () => {
   afterEach(() => {
@@ -133,5 +135,36 @@ describe("Main Portfolio Page Sections", () => {
       vi.advanceTimersByTime(7000);
     });
     expect(telemetryBar).toHaveTextContent(/10ms/i);
+  });
+
+  it("renders illuminated career timeline rail inside ExperienceSection", () => {
+    render(
+      <LanguageProvider>
+        <ExperienceSection />
+      </LanguageProvider>
+    );
+
+    expect(screen.getByTestId("career-timeline-rail")).toBeInTheDocument();
+  });
+
+  it("renders SideProjectsPreview with cover screenshots, metrics, and deep links to /side-projects", () => {
+    render(
+      <LanguageProvider>
+        <SideProjectsPreview />
+      </LanguageProvider>
+    );
+
+    for (const sp of portfolioData.sideProjects) {
+      expect(screen.getByText(sp.title.vi)).toBeInTheDocument();
+      expect(screen.getByAltText(sp.images[0].alt.vi)).toHaveAttribute(
+        "src",
+        sp.images[0].src
+      );
+    }
+
+    const viewAllLink = screen.getByRole("link", {
+      name: /xem tất cả dự án phụ|view all side projects/i,
+    });
+    expect(viewAllLink).toHaveAttribute("href", "/side-projects");
   });
 });
