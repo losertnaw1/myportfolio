@@ -98,6 +98,11 @@ export interface EducationItem {
   details: LocalizedList;
 }
 
+export interface HeroStat {
+  value: string;
+  label: LocalizedText;
+}
+
 export const portfolioData = {
   profile: {
     name: "Lê Quốc Đạt",
@@ -133,6 +138,37 @@ export const portfolioData = {
     },
   },
 
+  heroStats: [
+    {
+      value: "4+",
+      label: {
+        vi: "Năm Kinh nghiệm",
+        en: "Years Experience",
+      },
+    },
+    {
+      value: "< 15 ms",
+      label: {
+        vi: "Độ trễ Xử lý ảnh",
+        en: "Vision Latency",
+      },
+    },
+    {
+      value: "24/7",
+      label: {
+        vi: "Vận hành Nhà máy",
+        en: "Factory Uptime",
+      },
+    },
+    {
+      value: "30",
+      label: {
+        vi: "Quy mô Team FinTech",
+        en: "Peak FinTech Team",
+      },
+    },
+  ] as HeroStat[],
+
   pipelineArchitecture: [
     {
       step: "01",
@@ -144,6 +180,10 @@ export const portfolioData = {
       desc: {
         vi: "Đọc/ghi thanh ghi PLC thời gian thực, nhận xung trigger chụp ảnh và thu thập tín hiệu cảm biến trên băng chuyền.",
         en: "Real-time PLC register polling/writing, high-speed camera hardware triggers, and conveyor sensor telemetry.",
+      },
+      telemetry: {
+        vi: "CHU KỲ PLC: 10ms • TRIGGER CAM: ĐỒNG BỘ",
+        en: "PLC POLL: 10ms • CAM TRIGGER: LOCKED",
       },
     },
     {
@@ -157,6 +197,10 @@ export const portfolioData = {
         vi: "Xử lý ảnh hậu kỳ (Post-image processing), điều phối luồng phân loại, đồng bộ MES và lưu trữ dữ liệu sản xuất.",
         en: "Post-image vision processing, sorting routing logic, MES synchronization, and high-throughput data aggregation.",
       },
+      telemetry: {
+        vi: ".NET WORKER: ĐA LUỒNG • MES: ĐỒNG BỘ",
+        en: ".NET WORKER: MULTI-THREAD • MES: SYNCED",
+      },
     },
     {
       step: "03",
@@ -168,6 +212,10 @@ export const portfolioData = {
       desc: {
         vi: "Ứng dụng Desktop/Web trực quan giúp vận hành viên giám sát trạng thái dây chuyền, xem thống kê và cấu hình trực tiếp tại nhà máy.",
         en: "Responsive Web & Electron Desktop HMI for real-time line monitoring, alarm diagnostics, and production analytics.",
+      },
+      telemetry: {
+        vi: "ELECTRON IPC: SẴN SÀNG • HMI: 60FPS",
+        en: "ELECTRON IPC: READY • HMI: 60FPS",
       },
     },
   ],

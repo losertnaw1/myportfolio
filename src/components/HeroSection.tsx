@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Cpu,
@@ -11,41 +11,67 @@ import {
   MapPin,
   Mail,
   Phone,
+  Radio,
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { portfolioData } from "@/data/portfolio";
 
-export function HeroSection() {
+export function HeroSection(): React.JSX.Element {
   const { lang, t } = useLanguage();
   const [activeLayer, setActiveLayer] = useState<number>(0);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (
+      isPaused ||
+      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches
+    ) {
+      return;
+    }
+
+    const totalLayers = portfolioData.pipelineArchitecture.length;
+    const timer = window.setInterval(() => {
+      setActiveLayer((prev) => (prev + 1) % totalLayers);
+    }, 3500);
+
+    return () => window.clearInterval(timer);
+  }, [isPaused]);
+
+  const currentNode =
+    portfolioData.pipelineArchitecture[activeLayer] ??
+    portfolioData.pipelineArchitecture[0];
 
   return (
     <section
       id="about"
       className="relative overflow-hidden pt-10 pb-20 sm:pt-16 sm:pb-24"
     >
-      {/* Ambient Radial Spotlights */}
+      {/* Floating Ambient Radial Spotlights */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-24 left-1/4 h-96 w-96 -translate-x-1/2 rounded-full bg-emerald-500/15 blur-3xl"
+        className="animate-float-slow pointer-events-none absolute -top-24 left-1/4 h-96 w-96 -translate-x-1/2 rounded-full bg-emerald-500/15 blur-3xl"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-16 right-1/4 h-80 w-80 rounded-full bg-sky-500/10 blur-3xl"
+        style={{ animationDelay: "1.5s" }}
+        className="animate-float-slow pointer-events-none absolute top-16 right-1/4 h-80 w-80 rounded-full bg-sky-500/10 blur-3xl"
       />
 
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid items-center gap-12 lg:grid-cols-12">
-          {/* Left Column: Engineer Identity & CTAs */}
+          {/* Left Column: Engineer Identity, CTAs & Impact Stats */}
           <div className="lg:col-span-7">
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 font-mono text-xs font-medium text-emerald-300">
-              <span className="h-2 w-2 rounded-full bg-emerald-400" />
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+              </span>
               <span>{t(portfolioData.profile.status)}</span>
             </div>
 
             <h1 className="mt-6 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
               {portfolioData.profile.name}
-              <span className="mt-2 block bg-gradient-to-r from-emerald-400 via-teal-300 to-sky-400 bg-clip-text text-2xl font-bold text-transparent sm:text-3xl lg:text-4xl">
+              <span className="animate-text-shimmer mt-2 block bg-gradient-to-r from-emerald-400 via-teal-200 to-sky-400 bg-clip-text text-2xl font-bold text-transparent sm:text-3xl lg:text-4xl">
                 {t(portfolioData.profile.role)}
               </span>
             </h1>
@@ -102,11 +128,35 @@ export function HeroSection() {
                 </span>
               </a>
             </div>
+
+            {/* Impact Metrics Strip */}
+            <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {portfolioData.heroStats.map((stat) => (
+                <div
+                  key={stat.value}
+                  className="rounded-xl border border-slate-800/80 bg-slate-900/60 px-3.5 py-2.5 backdrop-blur-sm transition-colors hover:border-emerald-500/40"
+                >
+                  <div className="font-mono text-lg font-extrabold text-emerald-400 sm:text-xl">
+                    {stat.value}
+                  </div>
+                  <div className="mt-0.5 text-[11px] font-medium text-slate-400">
+                    {t(stat.label)}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Right Column: Interactive End-to-End Architecture Pipeline */}
+          {/* Right Column: Live Auto-Cycling End-to-End Architecture Pipeline */}
           <div className="lg:col-span-5">
-            <div className="rounded-2xl border border-slate-800/90 bg-slate-900/75 p-5 shadow-2xl backdrop-blur-md sm:p-6">
+            <div
+              data-testid="hero-pipeline-card"
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
+              onFocus={() => setIsPaused(true)}
+              onBlur={() => setIsPaused(false)}
+              className="rounded-2xl border border-slate-800/90 bg-slate-900/75 p-5 shadow-2xl backdrop-blur-md transition-colors hover:border-emerald-500/30 sm:p-6"
+            >
               <div className="flex items-center justify-between border-b border-slate-800 pb-3.5">
                 <div className="flex items-center gap-2">
                   <Activity className="h-4 w-4 text-emerald-400" />
@@ -116,26 +166,40 @@ export function HeroSection() {
                       : "End-to-End System Architecture"}
                   </span>
                 </div>
-                <span className="rounded bg-emerald-500/15 px-2 py-0.5 font-mono text-[11px] font-semibold text-emerald-300">
+                <span className="inline-flex items-center gap-1.5 rounded bg-emerald-500/15 px-2 py-0.5 font-mono text-[11px] font-semibold text-emerald-300">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                   LIVE STACK
                 </span>
               </div>
 
-              <div className="mt-4 space-y-3">
+              <div className="mt-4 space-y-2.5">
                 {portfolioData.pipelineArchitecture.map((node, index) => {
                   const isSelected = activeLayer === index;
                   return (
                     <div key={node.step}>
                       <div
+                        role="button"
+                        tabIndex={0}
                         onClick={() => setActiveLayer(index)}
-                        className={`cursor-pointer rounded-xl border p-4 transition-all ${
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            setActiveLayer(index);
+                          }
+                        }}
+                        className={`cursor-pointer rounded-xl border p-4 transition-all duration-300 ${
                           isSelected
-                            ? "border-emerald-500/60 bg-slate-950/95 shadow-lg shadow-emerald-950/30"
+                            ? "border-emerald-500/70 bg-slate-950/95 shadow-lg shadow-emerald-950/40 ring-1 ring-emerald-500/20"
                             : "border-slate-800/90 bg-slate-950/60 hover:border-slate-700"
                         }`}
                       >
                         <div className="flex items-center justify-between">
-                          <span className="font-mono text-xs font-bold text-emerald-400">
+                          <span className="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-emerald-400">
+                            <span
+                              className={`h-1.5 w-1.5 rounded-full transition-colors ${
+                                isSelected ? "bg-emerald-400" : "bg-slate-600"
+                              }`}
+                            />
                             LAYER {node.step}
                           </span>
                           <span className="font-mono text-[11px] text-sky-300">
@@ -150,8 +214,10 @@ export function HeroSection() {
                         </p>
                       </div>
 
-                      {index < portfolioData.pipelineArchitecture.length - 1 && (
-                        <div className="flex items-center justify-center py-1 font-mono text-[11px] text-emerald-400/80">
+                      {index <
+                        portfolioData.pipelineArchitecture.length - 1 && (
+                        <div className="flex items-center justify-center gap-2 py-1 font-mono text-[11px] text-emerald-400/85">
+                          <span className="animate-telemetry-flow inline-block h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.9)]" />
                           <span>⇅ Real-time Telemetry / IPC / REST</span>
                         </div>
                       )}
@@ -160,7 +226,16 @@ export function HeroSection() {
                 })}
               </div>
 
-              <div className="mt-4 flex items-center justify-between rounded-xl border border-slate-800/80 bg-slate-950/80 px-3.5 py-2.5 font-mono text-xs text-slate-400">
+              {/* Active Layer Live Telemetry Bar */}
+              <div
+                data-testid="pipeline-telemetry-bar"
+                className="mt-4 flex items-center gap-2 rounded-xl border border-emerald-500/25 bg-emerald-950/25 px-3.5 py-2 font-mono text-[11px] font-semibold text-emerald-300"
+              >
+                <Radio className="h-3.5 w-3.5 shrink-0 text-emerald-400" />
+                <span className="truncate">{t(currentNode.telemetry)}</span>
+              </div>
+
+              <div className="mt-2.5 flex items-center justify-between rounded-xl border border-slate-800/80 bg-slate-950/80 px-3.5 py-2.5 font-mono text-xs text-slate-400">
                 <span className="flex items-center gap-1.5">
                   <Terminal className="h-3.5 w-3.5 text-sky-400" />
                   <span>Fullstack + PLC/MES</span>
@@ -177,4 +252,3 @@ export function HeroSection() {
     </section>
   );
 }
-
